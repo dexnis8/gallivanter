@@ -33,7 +33,7 @@ const SingleTourDetails = () => {
   useEffect(() => {
     console.log(status);
     console.log(error_joining);
-    if (data.status === "success") {
+    if (status?.status === "success") {
       toast.success(data.message);
       navigate("/user/joined-tours");
     }
