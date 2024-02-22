@@ -37,8 +37,8 @@ const SingleTourDetails = () => {
       toast.success(data.message);
       navigate("/user/joined-tours");
     }
-    if (error_joining) {
-      toast.error("An error occurred! Rejoin");
+    if (status?.status === "error") {
+      toast.error(status?.message);
     }
   }, [status, error_joining]);
   return (
@@ -108,7 +108,7 @@ const SingleTourDetails = () => {
                   <p className="font-semibold text-gray-500">
                     Creator:{" "}
                     <span className="font-normal">
-                      {data?.data?.tour?.companyName || "NA"}
+                      {data?.data?.tour?.creatorName || "NA"}
                     </span>
                   </p>
                   <p className="font-semibold text-gray-500">
