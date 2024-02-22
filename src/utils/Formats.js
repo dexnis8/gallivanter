@@ -13,7 +13,7 @@ export function formatDate(inputDate) {
 
 export function formatPrice(price) {
   // Convert the price to a string
-  const priceString = price.toString();
+  const priceString = price?.toString();
 
   // Split the string into dollars and cents (if applicable)
   const [dollars, cents] = priceString.split(".");

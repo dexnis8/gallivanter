@@ -5,6 +5,7 @@ const initialState = {
   isAuth: sessionStorage.getItem("tk") ? true : false,
   // isAuth: true,
   createTourStep: 1,
+  refetchItinery: false,
   user: {
     uuid: "",
     first_name: sessionStorage.getItem("first_name"),
@@ -41,9 +42,12 @@ const AuthTokenSlice = createSlice({
     nextTourStep: (state) => {
       state.createTourStep = 2;
     },
+    refetchItineries: (state) => {
+      state.refetchItinery = !state.refetchItinery;
+    },
   },
 });
 
-export const { setToken, unsetToken, setUser, nextTourStep } =
+export const { setToken, unsetToken, setUser, nextTourStep, refetchItineries } =
   AuthTokenSlice.actions;
 export default AuthTokenSlice.reducer;

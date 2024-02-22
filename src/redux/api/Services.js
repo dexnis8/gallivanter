@@ -61,19 +61,32 @@ export const Services = createApi({
       }),
     }),
     addItenery: builder.mutation({
-      query: ({ tour_id }) => ({
+      query: ({ tour_id, data }) => ({
         url: `/creators/tours/${tour_id}/itinerary`,
         method: "POST",
+        body: data,
       }),
     }),
     uploadTourImages: builder.mutation({
-      query: ({ formData }) => ({
+      query: (formData) => ({
         url: `/creators/tours/images`,
         method: "POST",
         body: formData,
         headers: {
           "Content-Type": "multipart/form-data",
         },
+      }),
+    }),
+    deleteItenery: builder.mutation({
+      query: ({ tour_id, itenery_id }) => ({
+        url: `/creators/tours/${tour_id}/itinerary/${itenery_id}`,
+        method: "DELETE",
+      }),
+    }),
+    userJoinTour: builder.mutation({
+      query: ({ id }) => ({
+        url: `/users/tours/${id}/join`,
+        method: "POST",
       }),
     }),
     getCreatorTours: builder.query({
@@ -97,6 +110,12 @@ export const Services = createApi({
     getUsersJoinedTours: builder.query({
       query: () => ({
         url: "/users/tours",
+        method: "GET",
+      }),
+    }),
+    getAllItenery: builder.query({
+      query: ({ tour_id }) => ({
+        url: `/creators/tours/${tour_id}/itinerary`,
         method: "GET",
       }),
     }),
@@ -124,6 +143,9 @@ export const {
   useGetUsersJoinedToursQuery,
   useUploadTourImagesMutation,
   useAddIteneryMutation,
+  useLazyGetAllIteneryQuery,
+  useDeleteIteneryMutation,
+  useUserJoinTourMutation,
   // useGetCategoriesQuery,
 } = Services;
 /* 

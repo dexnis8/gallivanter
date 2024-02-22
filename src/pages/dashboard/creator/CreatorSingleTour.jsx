@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { useParams } from "react-router-dom";
@@ -6,6 +7,7 @@ import { useGetSingleCreatorTourQuery } from "../../../redux/api/Services";
 import { formatDate } from "../../../utils/Formats";
 import FullPageLoader from "../../../components/FullPageLoader";
 import Footer from "../../../components/footer";
+import { IteneryCard } from "./EditTour";
 
 const CreatorSingleTour = () => {
   const { id } = useParams();
@@ -127,11 +129,49 @@ const CreatorSingleTour = () => {
               </div>
             </div>
           </div>
-          {/* <div className=" justify-center item-center mt-20 hidden">
-            <button className="py-3 hover:bg-primary-800 transition-all duration-300 px-10 text-sm font-bold bg-orange-500 rounded-full text-white">
-              Book Now
-            </button>
-          </div> */}
+          {/* Itenery */}
+          <div className="px-10 py-5 rounded-lg shadow-md border">
+            <h3 className="text-xl font-bold mb-3">Trip Itinerary</h3>
+            <p className="text-sm text-gray-500 mb-4  sm:w-1/2">
+              Show your itinerary to your guests. With this , guests can know
+              what to expect and how much fun it'll be.
+            </p>
+
+            <div className="iteneries grid gap-5 grid-cols-3">
+              {/* Map through iteneries here */}
+              {[1, 2, 3, 4].map((item) => (
+                <IteneryCard key={item} />
+              ))}
+
+              {/* <div className="flex flex-col items-center rounded-lg border border-dashed py-5">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="64"
+                  height="64"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="#808080"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <circle cx="12" cy="12" r="10" />
+                  <line x1="12" y1="8" x2="12" y2="16" />
+                  <line x1="8" y1="12" x2="16" y2="12" />
+                </svg>
+              
+
+                <input
+                  type="button"
+                  value="Add"
+                  onClick={handleOpen}
+                  className="mt-2 bg-orange-500 text-white hover:opacity-75 px-7 text-sm font-bold  py-2 rounded-md"
+                />
+              </div> */}
+            </div>
+          </div>
+
+          {/* Itenery stops here */}
           <Footer />
         </div>
       )}

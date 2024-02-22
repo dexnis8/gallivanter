@@ -1,20 +1,46 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Carousel } from "react-responsive-carousel";
 import Footer from "../../components/footer";
 import GalliHeader from "../../components/header";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
-import { useParams } from "react-router-dom";
-import { useGetSinglePublicTourQuery } from "../../redux/api/Services";
+import { useNavigate, useParams } from "react-router-dom";
+import {
+  useGetSinglePublicTourQuery,
+  useUserJoinTourMutation,
+} from "../../redux/api/Services";
 import FullPageLoader from "../../components/FullPageLoader";
 import { formatDate, formatPrice } from "../../utils/Formats";
+import { useEffect } from "react";
+import { ClipLoader } from "react-spinners";
+import { toast } from "react-toastify";
 
 const SingleTourDetails = () => {
   const { id } = useParams();
-  console.log(id);
+  const navigate = useNavigate();
 
   const { data, isLoading, error } = useGetSinglePublicTourQuery({ id });
-
+  const [
+    userJoinTour,
+    { data: status, isLoading: joining, error: error_joining },
+  ] = useUserJoinTourMutation();
   console.log(data);
   console.log(error);
+
+  const handleJoinTour = () => {
+    userJoinTour({ id });
+  };
+
+  useEffect(() => {
+    console.log(status);
+    console.log(error_joining);
+    if (data.status === "success") {
+      toast.success(data.message);
+      navigate("/user/joined-tours");
+    }
+    if (error_joining) {
+      toast.error("An error occurred! Rejoin");
+    }
+  }, [status, error_joining]);
   return (
     <>
       {isLoading ? (
@@ -105,8 +131,11 @@ const SingleTourDetails = () => {
                   </p>
                 </div>
 
-                <button className="py-3 my-5 hover:bg-primary-800 transition-all duration-300 px-10 text-sm font-bold bg-orange-500 rounded-full text-white">
-                  Join Tour
+                <button
+                  onClick={handleJoinTour}
+                  className="py-3 my-5 hover:bg-primary-800 transition-all duration-300 px-10 text-sm font-bold bg-orange-500 rounded-full text-white"
+                >
+                  {joining ? <ClipLoader color="#fff" /> : " Join Tour"}
                 </button>
               </div>
             </div>

@@ -15,10 +15,13 @@ import {
   useUploadTourImagesMutation,
 } from "../../redux/api/Services";
 import { useParams } from "react-router-dom";
+import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { refetchItineries } from "../../redux/slices/authToken";
 
 const AddItenerary = ({ open, handleClose }) => {
   const { tour_id } = useParams();
-
+  const [loading, setLoading] = useState(false);
   const { register, handleSubmit, setValue, watch, formState } = useForm({
     // mode: "onChange",
   });
@@ -26,91 +29,59 @@ const AddItenerary = ({ open, handleClose }) => {
   const [images, setImages] = useState([]);
   const [validationError, setValidationError] = useState("");
   const fileInputRef = useRef(null);
-
-  // Select options
-  const [options, setOptions] = useState({ type: "", category: "" });
-  // if no image is chosen
+  const [imageUrl, setImageUrl] = useState("");
   const [imgErr, setImgErr] = useState("");
+  const dispatch = useDispatch();
 
   // Queries
   const [
     addItenery,
     { data: response, isLoading: uploading, error: error_adding_itenery },
   ] = useAddIteneryMutation();
-  const [
-    uploadTourImages,
-    {
-      data: image_response,
-      isLoading: uploading_image,
-      error: error_uploading_image,
-    },
-  ] = useUploadTourImagesMutation();
-  // Handle Image selection
 
   function selectFiles() {
     fileInputRef.current.click();
     setValidationError("");
   }
 
-  // function onFileSeletion(event) {
-  //   const file = event.target.files[0];
-  //   if (file.length === 0) return;
-  //   if (file.length > 0) {
-  //     const formData = new FormData();
-  //     formData.append("image", file);
-  //     console.log(formData);
-  //     uploadTourImages(formData);
-  //   }
-  //   //fire upload image endpoint here
-
-  //   // setImage to the returned url in useState
-  //   // setImages([
-  //   //   {
-  //   //     name: file.name,
-  //   //     url: URL.createObjectURL(file),
-  //   //   },
-  //   // ]);
-  //   setImgErr("");
-  // }
   async function onFileSelection(event) {
     const file = event.target.files[0];
-
-    if (!file) return;
-
+    handleImageUpload(file);
+  }
+  const handleImageUpload = async (file) => {
     const formData = new FormData();
     formData.append("tourImages", file);
+    setLoading(true);
+    const response = await axios.post(
+      `https://wild-teal-sawfish-cap.cyclic.app/api/v1/creators/tours/images`,
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
 
-    try {
-      console.log(formData);
-
-      await uploadTourImages({ formData });
-
-      // Handle the response as needed
-    } catch (error) {
-      // Handle the error
-      console.error("Image upload error:", error.message);
+    if (response.status === 200) {
+      setLoading(false);
+      console.log(response);
+      toast.success(response?.data?.message);
+      setImages(response?.data?.images);
+      setImageUrl(response?.data?.images[0].url);
     }
-
-    // Reset or update state as needed
-    setImgErr("");
-  }
-
+  };
   function deleteImage(index) {
     setImages((prevImages) => prevImages.filter((_, i) => i !== index));
   }
-
-  useEffect(() => {
-    console.log(image_response);
-    console.log(error_uploading_image);
-  }, [image_response, error_uploading_image]);
-
+  console.log(imageUrl);
   const onSubmit = async (data) => {
     try {
       if (images.length === 1) {
         // upload image first and put the returned url here
-        data.image = "image url here";
+        data.image = imageUrl;
         console.log(data);
-        await addItenery({ tour_id });
+        console.log(tour_id);
+        await addItenery({ tour_id, data });
         setImgErr("");
       } else if (images.length > 1) {
         setImgErr("Only one image can be selected");
@@ -125,6 +96,11 @@ const AddItenerary = ({ open, handleClose }) => {
   useEffect(() => {
     console.log(response);
     console.log(error_adding_itenery);
+    if (response?.status === "success") {
+      toast.success(response?.message);
+      handleClose();
+      dispatch(refetchItineries());
+    }
     if (error_adding_itenery) {
       toast.error(error_adding_itenery?.data?.message);
     }
@@ -145,6 +121,7 @@ const AddItenerary = ({ open, handleClose }) => {
               type="number"
               {...register("day", {
                 required: "What day of the tour?",
+                valueAsNumber: true,
               })}
               placeholder="e.g 1"
               className="h-10 text-sm  outline-none focus:border-primary-800 bg-transparent border rounded-md pl-2"
@@ -184,7 +161,7 @@ const AddItenerary = ({ open, handleClose }) => {
               </label>
               <div className="flex flex-col mt-1 justify-center border px-[34px] py-[21.4px]  rounded-lg border-dashed border-grey-400">
                 <div className="text-center flex justify-center">
-                  {uploading_image ? <ClipLoader /> : <ArrowDrop />}
+                  {loading ? <ClipLoader /> : <ArrowDrop />}
                 </div>
                 <div className="flex justify-center">
                   <span className="text-[15] flex flex-col justify-center text-center text-grey-900">
@@ -202,9 +179,10 @@ const AddItenerary = ({ open, handleClose }) => {
                     <input
                       type="file"
                       name="file"
-                      // accept="image/jpeg, image/png"
-                      // multiple
+                      accept="image/*"
+                      multiple
                       onChange={onFileSelection}
+                      // onChange={handleUpload}
                       className="hidden"
                       ref={fileInputRef}
                     />

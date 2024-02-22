@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/prop-types */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/no-unescaped-entities */
 // import React from 'react'
@@ -7,14 +9,73 @@ import { useForm } from "react-hook-form";
 import CancelArror from "../../../components/icons/CancelArror";
 import { useEffect, useRef, useState } from "react";
 import ArrowDrop from "../../../components/icons/ArrowDrop";
-import { useDispatch } from "react-redux";
-import { nextTourStep } from "../../../redux/slices/authToken";
-import { useCreateTourMutation } from "../../../redux/api/Services";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  nextTourStep,
+  refetchItineries,
+} from "../../../redux/slices/authToken";
+import {
+  useCreateTourMutation,
+  useDeleteIteneryMutation,
+  useLazyGetAllIteneryQuery,
+} from "../../../redux/api/Services";
 import { ClipLoader } from "react-spinners";
 import { toast } from "react-toastify";
 import AddItenerary from "../../../components/modals/AddItenerary";
+import { useParams } from "react-router-dom";
+
+export const IteneryCard = ({ data, handleDelete, isDeleting }) => {
+  const [isHovered, setIsHovered] = useState(false);
+
+  const handleMouseEnter = () => {
+    setIsHovered(true);
+  };
+
+  const handleMouseLeave = () => {
+    setIsHovered(false);
+  };
+
+  const handleDeleteClick = () => {
+    // Add your delete logic here, e.g., call an API to delete the card
+    console.log(`Delete button clicked for card with ID: ${data?._id}`);
+  };
+
+  return (
+    <div
+      className="max-w-xs rounded overflow-hidden shadow-lg relative"
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
+      <img className="w-full" src={data?.image} alt="" />
+      <div className="px-3 py-4">
+        <div className="font-bold text-xl mb-2">{data?.title}</div>
+        <p className="text-gray-700 text-base">{data?.description}</p>
+      </div>
+      <div className="px-3 py-4 flex justify-between bottom-0 left-0 right-0">
+        <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">
+          Day {data?.day}
+        </span>
+        {isHovered && (
+          <span>
+            {isDeleting ? (
+              <ClipLoader />
+            ) : (
+              <input
+                type="button"
+                value="Delete"
+                className="bg-red-500 cursor-pointer  hover:bg-red-700 text-white font-bold py-1 text-sm px-4 rounded-full "
+                onClick={handleDelete}
+              />
+            )}
+          </span>
+        )}
+      </div>
+    </div>
+  );
+};
 
 export const EditTour = () => {
+  const { tour_id } = useParams();
   const form = useForm();
   const { register, handleSubmit, formState } = form;
   const { errors } = formState;
@@ -22,33 +83,28 @@ export const EditTour = () => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const [createTour, { data, isLoading, error }] = useCreateTourMutation();
-
-  const onFormSubmit = (data) => {
-    console.log(data);
-    createTour(data);
-    // dispatch(nextTourStep());
-  };
-  useEffect(() => {
-    if (data?.status === "success") {
-      dispatch(nextTourStep());
-      toast.success(data?.message);
-      sessionStorage.setItem("tour_id", data?._id);
-    }
-
-    if (error) {
-      toast.error("Error creating tour");
-    }
-  }, [data, error]);
-  console.log(data);
-  console.log(error);
-
   const [images, setImages] = useState([]);
   const [validationError, setValidationError] = useState("");
   const [setIsDragging] = useState(false);
   const fileInputRef = useRef(null);
+  const refetchItenery = useSelector((state) => state.authToken.refetchItinery);
   // const [imgErr, setImgErr] = useState("");
   const imgErr = "";
+  const [createTour, { data, isLoading, error }] = useCreateTourMutation();
+  const [
+    getAllItenery,
+    { data: iteneries, isLoading: loading_iteneries, error: fetch_error },
+  ] = useLazyGetAllIteneryQuery();
+  const [deleteItenery, { isLoading: deleting }] = useDeleteIteneryMutation();
+
+  useEffect(() => {
+    getAllItenery({ tour_id });
+  }, [tour_id, refetchItenery]);
+
+  useEffect(() => {
+    console.log(iteneries);
+    console.log(error);
+  }, [iteneries]);
 
   const maxFileSize = 5 * 1024 * 1024; // 5MB
   function selectFiles() {
@@ -132,6 +188,9 @@ export const EditTour = () => {
     return true;
   }
 
+  const onFormSubmit = (data) => {
+    console.log(data);
+  };
   return (
     <>
       <AddItenerary open={open} handleClose={handleClose} />
@@ -433,18 +492,31 @@ export const EditTour = () => {
             {/* Itenery */}
             <div className="px-10 py-5 rounded-lg shadow-md border">
               <h3 className="text-xl font-bold mb-3">Trip Itinerary</h3>
-              <p className="text-sm text-gray-500 mb-4  sm:w-1/2">
+              {/* <p className="text-sm text-gray-500 mb-4  sm:w-1/2">
                 Show your itinerary to your guests. With this , guests can know
                 what to expect and how much fun it'll be.
-              </p>
+              </p> */}
 
-              <div className="iteneries grid grid-cols-3">
+              <div className="iteneries grid gap-5 grid-cols-3">
                 {/* Map through iteneries here */}
-                {/* {[1, 2, 3, 4].map((item) => (
-                <div key={item}>{item}</div>
-              ))} */}
-
-                <div className="flex flex-col items-center rounded-lg border border-dashed py-5">
+                {loading_iteneries ? (
+                  <ClipLoader />
+                ) : (
+                  <>
+                    {iteneries?.data?.map((item) => (
+                      <IteneryCard
+                        key={item}
+                        data={item}
+                        handleDelete={() => {
+                          deleteItenery({ tour_id, itenery_id: item._id });
+                          dispatch(refetchItineries());
+                        }}
+                        isDeleting={deleting}
+                      />
+                    ))}
+                  </>
+                )}
+                <div className="flex justify-center flex-col items-center rounded-lg border border-dashed py-5">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="64"
@@ -460,20 +532,6 @@ export const EditTour = () => {
                     <line x1="12" y1="8" x2="12" y2="16" />
                     <line x1="8" y1="12" x2="16" y2="12" />
                   </svg>
-                  {/* <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  className="w-16 h-16 text-gray-500"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M12 4v16m8-8H4"
-                  />
-                </svg> */}
 
                   <input
                     type="button"
