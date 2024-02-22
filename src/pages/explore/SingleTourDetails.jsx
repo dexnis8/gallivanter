@@ -135,7 +135,11 @@ const SingleTourDetails = () => {
                   onClick={handleJoinTour}
                   className="py-3 my-5 hover:bg-primary-800 transition-all duration-300 px-10 text-sm font-bold bg-orange-500 rounded-full text-white"
                 >
-                  {joining ? <ClipLoader color="#fff" /> : " Join Tour"}
+                  {joining ? (
+                    <ClipLoader size={16} color="#fff" />
+                  ) : (
+                    " Join Tour"
+                  )}
                 </button>
               </div>
             </div>
