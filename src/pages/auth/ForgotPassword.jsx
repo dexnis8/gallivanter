@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../../assets/logo.png";
@@ -27,13 +29,12 @@ const ForgotPassword = () => {
     } catch (error) {
       toast.error("An error ocurred");
     }
-    
   };
   useEffect(() => {
-    if(data?.status === 'success'){
-      toast.success(data?.message)
+    if (data?.status === "success") {
+      toast.success(data?.message);
       navigate("/auth/reset-password-email-verification");
-   }
+    }
   }, [error, data]);
   console.log(isLoading);
   console.log(data);
@@ -41,7 +42,7 @@ const ForgotPassword = () => {
 
   return (
     <>
-      <div className="flex py-5 overflow-y-auto gap-3 flex-col bg-purple-200  h-[100vh] w-[100vw] justify-center items-center ">
+      <div className="flex py-5 overflow-y-auto gap-3 flex-col bg-primary-200  h-[100vh] w-[100vw] justify-center items-center ">
         <div
           onClick={() => navigate("/")}
           className="mx-auto flex items-center justify-center overflow-hidden  w-[195px] h-[53px] p-8 "
@@ -81,7 +82,7 @@ const ForgotPassword = () => {
                     } px-4 rounded-lg outline-none ${
                       errors.email?.message
                         ? "focus:border-red-100 border-2"
-                        : "focus:border-purple-600"
+                        : "focus:border-primary-800"
                     } `}
                     {...register("email", {
                       required: "Email address is required!",
@@ -99,7 +100,7 @@ const ForgotPassword = () => {
               <button
                 type="submit"
                 disabled={isLoading}
-                className="mt-2 py-3 rounded-lg text-purple-100 text-base bg-purple-700 hover:opacity-75 transition-opacity "
+                className="mt-2 py-3 w-1/2 mx-auto rounded-full text-purple-100 text-base bg-orange-500 hover:opacity-75 transition-opacity "
               >
                 {isLoading ? (
                   <ClipLoader size={20} color="#fff" />
@@ -109,7 +110,10 @@ const ForgotPassword = () => {
               </button>
               <p className="text-xs mt-2 text-center">
                 Back to{" "}
-                <Link to={"/auth/login"} className="text-purple-400 underline">
+                <Link
+                  to={"/auth/sign-in/user"}
+                  className="text-orange-500 underline"
+                >
                   Sign in
                 </Link>
               </p>
