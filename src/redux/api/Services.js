@@ -134,10 +134,9 @@ export const Services = createApi({
       }),
     }),
     getAllPublicTours: builder.query({
-      query: (params) => ({
-        url: `/tours?state=${params.state}&sort=${params.price}`,
+      query: () => ({
+        url: `/tours?state=published`,
         method: "GET",
-        params,
       }),
     }),
     exampleuse: builder.query({
@@ -168,6 +167,6 @@ export const {
   useDeleteIteneryMutation,
   useUserJoinTourMutation,
   useUpdateTourMutation,
-  useDeleteImageMutation
+  useDeleteImageMutation,
   // useGetCategoriesQuery,
 } = Services;

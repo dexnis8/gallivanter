@@ -202,9 +202,7 @@ const Tours = () => {
     useLazyGetAllPublicToursQuery();
 
   useEffect(() => {
-    getAllPublicTours({
-      state: "published",
-    });
+    getAllPublicTours();
   }, []);
 
   console.log(data);

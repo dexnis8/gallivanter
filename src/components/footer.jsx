@@ -12,19 +12,21 @@ import {
 const Footer = () => {
   // const navigate = useNavigate();
   return (
-    <div className="mt-24 p-[16px] md:p-[64px] items-center justify-center flex flex-col">
+    <div className="sm:mt-24 p-[16px] md:p-[64px] items-center justify-center flex flex-col">
       <Divider className="bg-[#bdbdbd]" />
-      <div className="flex mt-24  max-w-[1920px]">
-        <div className="w-2/3">
+      <div className="sm:flex-row flex-col sm:gap-0 gap-5 flex sm:mt-24  max-w-[1920px]">
+        <div className="sm:w-2/3">
           <img
             src="/assets/images/logo.png"
             alt=""
             className="mb-6 w-[120px]"
           />
           <p>
-            Gallivanter is a dynamic platform designed to connect and empower
+            {/* Gallivanter is a dynamic platform designed to connect and empower
             three distinct user groups within the world of travel and adventure:
-            Tourists, Local Guides, and Tour Agents/Providers.
+            Tourists, Local Guides, and Tour Agents/Providers. */}
+            Gallivanter helps you manage your tour operations seamlessly. We are
+            the operating system for tour businesses in Africa.
           </p>
         </div>
         <div className="flex gap-[32px]">

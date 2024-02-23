@@ -56,7 +56,14 @@ const GalliHeader = ({
           <FaBars color="black" className="md:hidden" onClick={openDrawer} />
 
           {/* <img className="h-10" src="/assets/images/icon.png" alt="" /> */}
-          <img className="h-10" src="/assets/images/logo.png" alt="" />
+          <img
+            className="h-10"
+            src="/assets/images/logo.png"
+            alt=""
+            onClick={() => {
+              navigate("/");
+            }}
+          />
           <span className="md:flex gap-8 hidden">
             <NavLink to="/">
               {({ isActive }) => {
@@ -166,9 +173,9 @@ const GalliHeader = ({
             </Menu>
           </div>
         ) : (
-          <div className="flex gap-3">
+          <div className="flex gap-1 sm:gap-3">
             <div
-              className="bg-[#F76F59] hover:opacity-75 cursor-pointer text-white px-6 py-2 rounded-full"
+              className="bg-[#F76F59] text-sm sm:text-base hover:opacity-75 cursor-pointer text-white px-6 py-2 rounded-full"
               onClick={() => {
                 navigate("/auth/sign-in/user");
               }}
@@ -176,7 +183,7 @@ const GalliHeader = ({
               Sign In
             </div>
             <div
-              className="border cursor-pointer hover:text-white hover:bg-[#F76F59] transition-all duration-300 border-[#F76F59] text-[#F76F59] px-6 py-2 rounded-full"
+              className="border hidden sm:block cursor-pointer hover:text-white hover:bg-[#F76F59] transition-all duration-300 border-[#F76F59] text-[#F76F59] px-6 py-2 rounded-full"
               onClick={() => {
                 navigate("/auth/sign-up/user");
               }}
