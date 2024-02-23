@@ -15,11 +15,13 @@ function TourCard({ data }) {
         className="w-full mx-auto bg-white rounded-md overflow-hidden shadow-md hover:shadow-lg transition-transform hover:-translate-y-1 cursor-pointer"
       >
         {/* Image */}
-        <img
-          src="/assets/images/tour1.jpg"
-          alt="Card Image"
-          className="w-full h-40 object-cover object-center"
-        />
+        <div className="bg-gray-200">
+          <img
+            src={data?.tourImagesData[0]?.url}
+            alt={data?.tourImagesData[0]?._id}
+            className="w-full h-40 object-cover object-center"
+          />
+        </div>
 
         {/* Card Body */}
         <div className="p-4">

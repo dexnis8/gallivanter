@@ -19,7 +19,7 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { refetchItineries } from "../../redux/slices/authToken";
 
-const AddItenerary = ({ open, handleClose }) => {
+const AddItenerary = ({ open, handleClose, id }) => {
   const { tour_id } = useParams();
   const [loading, setLoading] = useState(false);
   const { register, handleSubmit, setValue, watch, formState } = useForm({
@@ -48,7 +48,7 @@ const AddItenerary = ({ open, handleClose }) => {
     const file = event.target.files[0];
     handleImageUpload(file);
   }
-  const handleImageUpload = async (file) => {
+  async function handleImageUpload(file) {
     const formData = new FormData();
     formData.append("tourImages", file);
     setLoading(true);
@@ -69,11 +69,11 @@ const AddItenerary = ({ open, handleClose }) => {
       setImages(response?.data?.images);
       setImageUrl(response?.data?.images[0].url);
     }
-  };
+  }
   function deleteImage(index) {
     setImages((prevImages) => prevImages.filter((_, i) => i !== index));
   }
-  console.log(imageUrl);
+  // console.log(imageUrl);
   const onSubmit = async (data) => {
     try {
       if (images.length === 1) {
@@ -81,7 +81,7 @@ const AddItenerary = ({ open, handleClose }) => {
         data.image = imageUrl;
         console.log(data);
         console.log(tour_id);
-        await addItenery({ tour_id, data });
+        await addItenery({ tour_id: tour_id || id, data });
         setImgErr("");
       } else if (images.length > 1) {
         setImgErr("Only one image can be selected");

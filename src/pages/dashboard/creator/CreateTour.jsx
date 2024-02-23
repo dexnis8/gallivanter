@@ -1,3 +1,5 @@
+/* eslint-disable no-unsafe-optional-chaining */
+/* eslint-disable no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/no-unescaped-entities */
 // import React from 'react'
@@ -8,14 +10,23 @@ import CancelArror from "../../../components/icons/CancelArror";
 import { useEffect, useRef, useState } from "react";
 import ArrowDrop from "../../../components/icons/ArrowDrop";
 import { useDispatch, useSelector } from "react-redux";
-import { nextTourStep } from "../../../redux/slices/authToken";
+import {
+  nextTourStep,
+  refetchItineries,
+  setTourId,
+} from "../../../redux/slices/authToken";
 import {
   useCreateTourMutation,
-  useUploadTourImagesMutation,
+  useDeleteIteneryMutation,
+  useLazyGetAllIteneryQuery,
+  useUpdateTourMutation,
 } from "../../../redux/api/Services";
 import { ClipLoader } from "react-spinners";
 import { toast } from "react-toastify";
 import AddItenerary from "../../../components/modals/AddItenerary";
+import axios from "axios";
+import { IteneryCard } from "./EditTour";
+import { useNavigate } from "react-router-dom";
 
 const Step1 = () => {
   const form = useForm();
@@ -32,13 +43,15 @@ const Step1 = () => {
   };
   useEffect(() => {
     if (data?.status === "success") {
-      dispatch(nextTourStep());
       toast.success(data?.message);
-      sessionStorage.setItem("tour_id", data?._id);
+      console.log(data?.data?._id);
+      // sessionStorage.setItem("tour_id", data?._id);
+      dispatch(nextTourStep(2));
+      dispatch(setTourId(data?.data?._id));
     }
 
     if (error) {
-      toast.error("Error creating tour");
+      toast.error(error?.data?.message);
     }
   }, [data, error]);
   console.log(data);
@@ -271,7 +284,11 @@ const Step1 = () => {
             // disabled
             className={`mt-20 border py-3 rounded-lg text-sm font-bold bg-orange-500 text-white px-10 transition-all duration-300 hover:opacity-75`}
           >
-            {isLoading ? <ClipLoader /> : "Save & continue"}
+            {isLoading ? (
+              <ClipLoader size={12} color="#fff" />
+            ) : (
+              "Save & continue"
+            )}
           </button>
         </div>
       </form>
@@ -285,56 +302,36 @@ const Step2 = () => {
   const [setIsDragging] = useState(false);
   const fileInputRef = useRef(null);
   const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  // const [imgErr, setImgErr] = useState("");
-  const imgErr = "";
+  const [imgErr, setImgErr] = useState("");
+  const token = useSelector((state) => state.authToken.token);
+  const tour_id = useSelector((state) => state.authToken.tour_id);
+  const refetchItenery = useSelector((state) => state.authToken.refetchItinery);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   // Queries
+  const [
+    updateTour,
+    { data: update_response, isLoading: updating, error: update_error },
+  ] = useUpdateTourMutation();
+  const [
+    getAllItenery,
+    { data: iteneries, isLoading: loading_iteneries, error: fetch_error },
+  ] = useLazyGetAllIteneryQuery();
+  const [deleteItenery, { isLoading: deleting }] = useDeleteIteneryMutation();
 
-  const [uploadTourImages, { data, isLoading, error }] =
-    useUploadTourImagesMutation();
-
-  const maxFileSize = 5 * 1024 * 1024; // 5MB
   function selectFiles() {
     fileInputRef.current.click();
     setValidationError("");
   }
   function onFileSeletion(event) {
     const files = event.target.files;
-    const formData = new FormData();
+
     if (files.length === 0) return;
-
-    if (files.length > 0) {
-      for (let i = 0; i < files.length; i++) {
-        if (files[i].type.split("/")[0] !== "image") continue;
-        if (!images.some((e) => e.name == files[i].name)) {
-          // Validate the selected images
-          // totalSize += files?.size;
-          const validationErrorMessage = validateImages(files);
-
-          if (validationErrorMessage) {
-            // alert(validationError);
-            setValidationError(validationErrorMessage);
-            // e.target.value = null; // Clear the input field
-          }
-          if (!validationErrorMessage) {
-            // setImages((prevImages) => [
-            //   ...prevImages,
-            //   {
-            //     name: files[i].name,
-            //     url: URL.createObjectURL(files[i]),
-            //   },
-            // ]);
-            setValidationError("");
-            formData.append("tourImages", files[i]);
-          }
-        }
-      }
-
-      // upload image endpoint here
-      uploadTourImages(formData);
-    }
+    handleImageUpload(files);
   }
   function deleteImage(index) {
     setImages((prevImages) => prevImages.filter((_, i) => i !== index));
@@ -366,35 +363,61 @@ const Step2 = () => {
       }
     }
   }
-
-  // console.log(selectedImages);
-  function validateImages(files) {
-    const acceptedTypes = ["image/jpeg", "image/png"];
-
-    for (const file of files) {
-      if (!acceptedTypes.includes(file.type)) {
-        return "Please upload only JPEG or PNG images.";
-      }
-      if (file.size > maxFileSize) {
-        return "Maximum file size is 5MB.";
-      } else {
-        return null;
-      }
-    }
-
-    return true;
-  }
-  // image selection ends here
-
   useEffect(() => {
-    console.log(data);
-    console.log(error);
-    console.log(isLoading);
-  }, [data, error]);
+    getAllItenery({ tour_id });
+  }, [tour_id, refetchItenery]);
+  useEffect(() => {
+    console.log(update_response);
+    console.log(update_error);
+    if (update_response?.status === "success") {
+      toast.success(update_response?.message);
+      navigate("/dashboard/created-tours");
+      dispatch(nextTourStep(1));
+    }
+    if (update_error) {
+      toast.error("Unable to publish tour");
+    }
+  }, [update_response, update_error]);
 
+  async function handleImageUpload(files) {
+    const formData = new FormData();
+    for (let i = 0; i < files.length; i++) {
+      formData.append("tourImages", files[i]);
+    }
+    setLoading(true);
+    const response = await axios.post(
+      `https://wild-teal-sawfish-cap.cyclic.app/api/v1/creators/tours/images`,
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    if (response.status === 200) {
+      setLoading(false);
+      console.log(response);
+      toast.success(response?.data?.message);
+      setImages((prev) => [...prev, ...response?.data?.images]);
+    }
+  }
+
+  function handlePublishTour() {
+    if (images.length > 0) {
+      const data = {
+        tourImagesData: images,
+        itinerary: iteneries?.data,
+      };
+      updateTour({ data, tour_id });
+    } else {
+      toast.error("Please select at least one image");
+    }
+  }
   return (
     <>
-      <AddItenerary open={open} handleClose={handleClose} />
+      <AddItenerary open={open} handleClose={handleClose} id={tour_id} />
 
       <div className="flex flex-col gap-8">
         {/* Tour Photos */}
@@ -407,7 +430,7 @@ const Step2 = () => {
             className="flex flex-col mt-1 justify-center border px-[34px] py-[21.4px]  rounded-lg border-dashed border-grey-400"
           >
             <div className="text-center flex justify-center">
-              <ArrowDrop />
+              {loading ? <ClipLoader /> : <ArrowDrop />}
             </div>
             <div className="flex justify-center">
               <span className="text-[15] flex flex-col justify-center text-center text-grey-500">
@@ -443,7 +466,7 @@ const Step2 = () => {
           </div>
           <FormHelperText error>{validationError || imgErr}</FormHelperText>
           <div className="relative mt-3 grid grid-cols-3 gap-2 ">
-            {images.map((images, index) => (
+            {images?.map((image, index) => (
               <div className="relative flex flex-col " key={index}>
                 <div
                   className="absolute flex justify-end right-0 top-0 p-[3px] cursor-pointer bg-red-500 
@@ -454,8 +477,8 @@ const Step2 = () => {
                 </div>
                 <span className="flex rounded-lg p-1 shadow-card justify-centeritems-center overflow-hidden  border h-[200px] ">
                   <img
-                    src={images.url}
-                    alt={images.name}
+                    src={image.url}
+                    alt={image._id}
                     className=" w-full h-full object-fill rounded-lg"
                   />
                 </span>
@@ -472,13 +495,27 @@ const Step2 = () => {
             to expect and how much fun it'll be.
           </p>
 
-          <div className="iteneries grid grid-cols-3">
+          <div className="iteneries grid gap-5 grid-cols-3">
             {/* Map through iteneries here */}
-            {/* {[1, 2, 3, 4].map((item) => (
-                <div key={item}>{item}</div>
-              ))} */}
-
-            <div className="flex flex-col items-center rounded-lg border border-dashed py-5">
+            {loading_iteneries ? (
+              <ClipLoader />
+            ) : (
+              <>
+                {iteneries?.data?.map((item) => (
+                  <IteneryCard
+                    key={item}
+                    data={item}
+                    handleDelete={() => {
+                      deleteItenery({ tour_id, itenery_id: item._id });
+                      dispatch(refetchItineries());
+                    }}
+                    isDeleting={deleting}
+                    showDeleteBtn={true}
+                  />
+                ))}
+              </>
+            )}
+            <div className="flex justify-center flex-col items-center rounded-lg border border-dashed py-5">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="64"
@@ -494,20 +531,6 @@ const Step2 = () => {
                 <line x1="12" y1="8" x2="12" y2="16" />
                 <line x1="8" y1="12" x2="16" y2="12" />
               </svg>
-              {/* <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  className="w-16 h-16 text-gray-500"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M12 4v16m8-8H4"
-                  />
-                </svg> */}
 
               <input
                 type="button"
@@ -521,10 +544,11 @@ const Step2 = () => {
         <div className="my-5 flex justify-end">
           <button
             type="submit"
-            // disabled
+            disabled={updating}
+            onClick={handlePublishTour}
             className={`mt-20 border py-3 rounded-lg text-sm font-bold bg-orange-500 text-white px-10 transition-all duration-300 hover:opacity-75`}
           >
-            Publish
+            {updating ? <ClipLoader size={12} color="#fff" /> : " Publish"}
           </button>
         </div>
       </div>
@@ -539,6 +563,7 @@ export const CreateTour = () => {
     <>
       <div className="flex flex-col gap-8">
         {/* All steps goes here */}
+
         {tourStep === 1 && <Step1 />}
         {tourStep === 2 && <Step2 />}
       </div>

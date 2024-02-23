@@ -1,7 +1,8 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/no-unescaped-entities */
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import GalliHeader from "../../../components/header";
 import { useGetSingleCreatorTourQuery } from "../../../redux/api/Services";
 import { formatDate } from "../../../utils/Formats";
@@ -10,13 +11,14 @@ import Footer from "../../../components/footer";
 import { IteneryCard } from "./EditTour";
 
 const CreatorSingleTour = () => {
+  const navigate = useNavigate();
   const { id } = useParams();
   console.log(id);
 
   const { data, isLoading, error } = useGetSingleCreatorTourQuery({ id });
 
   console.log(data);
-  console.log(error);
+  // console.log(data?.data?.tour?.itinerary);
   return (
     <>
       {isLoading ? (
@@ -39,15 +41,15 @@ const CreatorSingleTour = () => {
                 stopOnHover={false}
                 animationHandler="fade"
               >
-                {[1, 2, 3].map((item) => (
+                {data?.data?.tour?.tourImagesData?.map((item) => (
                   <div
-                    key={item}
+                    key={item._id}
                     className="h-[400px] shadow-lg mb-2 bg-slate-600 rounded-lg overflow-hidden "
                   >
                     <img
-                      src={`/assets/images/tour${item}.jpg`}
+                      src={item.url}
                       className="object-cover w-full h-full"
-                      alt=""
+                      alt={item._id}
                     />
                   </div>
                 ))}
@@ -123,14 +125,17 @@ const CreatorSingleTour = () => {
                   </p>
                 </div>
 
-                <button className="py-3 my-5 hover:bg-primary-800 transition-all duration-300 px-10 text-sm font-bold bg-orange-500 rounded-full text-white">
+                <button
+                  onClick={() => navigate(`/dashboard/edit-tour/${id}`)}
+                  className="py-3 my-5 hover:bg-primary-800 transition-all duration-300 px-10 text-sm font-bold bg-orange-500 rounded-full text-white"
+                >
                   Edit
                 </button>
               </div>
             </div>
           </div>
           {/* Itenery */}
-          <div className="px-10 py-5 rounded-lg shadow-md border">
+          <div className="px-10 mt-10 py-5 rounded-lg shadow-md max-w-[1000px] mx-auto bg-white border ">
             <h3 className="text-xl font-bold mb-3">Trip Itinerary</h3>
             <p className="text-sm text-gray-500 mb-4  sm:w-1/2">
               Show your itinerary to your guests. With this , guests can know
@@ -139,8 +144,8 @@ const CreatorSingleTour = () => {
 
             <div className="iteneries grid gap-5 grid-cols-3">
               {/* Map through iteneries here */}
-              {[1, 2, 3, 4].map((item) => (
-                <IteneryCard key={item} />
+              {data?.data?.tour?.itinerary?.map((item, index) => (
+                <IteneryCard key={index} data={item} showDeleteBtn={false} />
               ))}
 
               {/* <div className="flex flex-col items-center rounded-lg border border-dashed py-5">
@@ -170,7 +175,6 @@ const CreatorSingleTour = () => {
               </div> */}
             </div>
           </div>
-
           {/* Itenery stops here */}
           <Footer />
         </div>

@@ -77,6 +77,13 @@ export const Services = createApi({
         },
       }),
     }),
+    deleteImage: builder.mutation({
+      query: (body) => ({
+        url: `/creators/tours/images`,
+        method: "DELETE",
+        body,
+      }),
+    }),
     deleteItenery: builder.mutation({
       query: ({ tour_id, itenery_id }) => ({
         url: `/creators/tours/${tour_id}/itinerary/${itenery_id}`,
@@ -89,9 +96,16 @@ export const Services = createApi({
         method: "POST",
       }),
     }),
+    updateTour: builder.mutation({
+      query: ({ data, tour_id }) => ({
+        url: `/creators/tours/${tour_id}`,
+        method: "PUT",
+        body: data,
+      }),
+    }),
     getCreatorTours: builder.query({
       query: () => ({
-        url: `/tours`,
+        url: `/creators/tours`,
         method: "GET",
       }),
     }),
@@ -126,6 +140,13 @@ export const Services = createApi({
         params,
       }),
     }),
+    exampleuse: builder.query({
+      query: (params) => ({
+        url: `/tours?state=${params.state}&sort=${params.price}`,
+        method: "GET",
+        params,
+      }),
+    }),
   }),
 });
 
@@ -146,30 +167,7 @@ export const {
   useLazyGetAllIteneryQuery,
   useDeleteIteneryMutation,
   useUserJoinTourMutation,
+  useUpdateTourMutation,
+  useDeleteImageMutation
   // useGetCategoriesQuery,
 } = Services;
-/* 
-
-{
-      _id: '65d5ea120d2aef91409584b7',
-      title: 'Est provident commo',
-      description: 'Quis dolorem illo eu',
-      creatorId: '65d548bf4d280ad2eda49f50',
-      creatorName: 'Isaac',
-      companyName: 'Dexnis',
-      location: 'Suscipit aut ea earu',
-      numOfDays: 13,
-      price: 163,
-      maxCapacity: 24,
-      regMembers: [],
-      numOfRegMembers: 0,
-      tags: [],
-      tourImagesUrl: [],
-      state: 'draft',
-      startDate: '1985-06-06T00:00:00.000Z',
-      endDate: '1990-03-26T00:00:00.000Z',
-      itinerary: [],
-      createdAt: '2024-02-21T12:18:26.511Z',
-      updatedAt: '2024-02-21T12:18:26.511Z'
-    },
-*/

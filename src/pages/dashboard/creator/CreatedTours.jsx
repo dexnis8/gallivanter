@@ -13,9 +13,9 @@ const TourCard = ({ data, base_url = "/view-creator-tour/" }) => {
     <>
       <div className="relative cursor-pointer group overflow-hidden rounded-lg shadow-lg transition-transform transform hover:scale-105">
         <img
-          src="/assets/images/tour1.jpg"
+          src={data?.tourImagesData[0]?.url}
           // src={data?.tourImagesUrl[0]}
-          alt="Card Image"
+          alt={data?.tourImagesData[0]?._id}
           className="object-cover w-full h-64 transition-opacity duration-300 group-hover:opacity-75"
         />
 

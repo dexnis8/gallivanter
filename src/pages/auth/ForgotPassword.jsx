@@ -9,6 +9,7 @@ import { useForgotPasswordMutation } from "../../redux/api/AuthApi";
 import { toast } from "react-toastify";
 import { ClipLoader } from "react-spinners";
 import { useDispatch, useSelector } from "react-redux";
+import GalliHeader from "../../components/header";
 
 const ForgotPassword = () => {
   const navigate = useNavigate();
@@ -42,13 +43,14 @@ const ForgotPassword = () => {
 
   return (
     <>
+      <GalliHeader />
       <div className="flex py-5 overflow-y-auto gap-3 flex-col bg-primary-200  h-[100vh] w-[100vw] justify-center items-center ">
-        <div
+        {/* <div
           onClick={() => navigate("/")}
           className="mx-auto flex items-center justify-center overflow-hidden  w-[195px] h-[53px] p-8 "
         >
           <img src={logo} alt="logo" className="w-[100%] " />
-        </div>
+        </div> */}
         <div className=" w-[95%] sm:w-[436px] shadow-card p-[28px] sm:p-[48px] rounded-lg bg-white ">
           <h1 className="text-center font-bold text-[20px] text-black-ercas mb-3 ">
             Forgot Password?

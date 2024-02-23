@@ -16,6 +16,7 @@ import { toast } from "react-toastify";
 import { ClipLoader } from "react-spinners";
 import { useDispatch } from "react-redux";
 import { setToken, setUser } from "../../redux/slices/authToken";
+import GalliHeader from "../../components/header";
 
 export const SignInAsCreator = () => {
   const navigate = useNavigate();
@@ -285,14 +286,15 @@ const Login = () => {
 
   return (
     <>
+      <GalliHeader />
       <div className="flex py-5 overflow-y-auto gap-3 flex-col bg-primary-200  h-[100vh] w-[100vw]  items-center ">
-        <div
+        {/* <div
           onClick={() => navigate("/")}
           className="mx-auto flex items-center justify-center overflow-hidden  w-[100px] h-[53px] p-8 "
         >
           <img src={logo} alt="logo" className=" " />
-          {/* <h2>Gallivanter</h2> */}
-        </div>
+           <h2>Gallivanter</h2> 
+        </div> */}
         <div className=" w-[95%] sm:w-[436px] shadow-card p-[28px] sm:p-[48px] rounded-lg bg-white ">
           <h1 className="text-center font-bold text-[20px] text-primary-800 mb-5 ">
             Sign in to Gallivanter

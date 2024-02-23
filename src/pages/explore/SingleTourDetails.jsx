@@ -40,6 +40,10 @@ const SingleTourDetails = () => {
     if (status?.status === "error") {
       toast.error(status?.message);
     }
+    if (error_joining) {
+      toast.error(error_joining?.data + ": " + "Please login");
+      navigate("/auth/sign-in/user");
+    }
   }, [status, error_joining]);
   return (
     <>

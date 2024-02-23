@@ -26,11 +26,13 @@ export function TourCard({ data }) {
         className="w-full mx-auto bg-white rounded-md overflow-hidden shadow-md hover:shadow-lg transition-transform hover:-translate-y-1 cursor-pointer"
       >
         {/* Image */}
-        <img
-          src="/assets/images/tour1.jpg"
-          alt="Card Image"
-          className="w-full h-40 object-cover object-center"
-        />
+        <div className="bg-gray-200">
+          <img
+            src={data?.tourImagesData[0]?.url}
+            alt={data?.tourImagesData[0]?._id}
+            className="w-full h-40 object-cover object-center"
+          />
+        </div>
 
         {/* Card Body */}
         <div className="p-4">
@@ -216,7 +218,9 @@ const Tours = () => {
             <h1 className=" text-xl capitalize sm:text-2xl font-bold text-black-ercas mb-6">
               Trips
             </h1>
-            <p className="text-xl font-bold mb-2">20 trips available</p>
+            <p className="text-xl font-bold mb-2">
+              {data?.result} trips available
+            </p>
           </div>
 
           <div className="grid grid-cols-4 items-center gap-6 ">

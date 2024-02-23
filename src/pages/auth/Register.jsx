@@ -16,6 +16,7 @@ import { ClipLoader } from "react-spinners";
 import { toast } from "react-toastify";
 import { setToken, setUser } from "../../redux/slices/authToken";
 import { useDispatch } from "react-redux";
+import GalliHeader from "../../components/header";
 
 // Register as a creator
 export const SignUpAsCreator = () => {
@@ -573,14 +574,15 @@ const Register = () => {
 
   return (
     <>
+      <GalliHeader />
       <div className="flex py-5 gap-3 flex-col bg-primary-200   w-[100vw] overflow-x-hidden justify-center items-center ">
-        <div
+        {/* <div
           onClick={() => navigate("/")}
           className="mx-auto flex items-center justify-center overflow-hidden  w-[100px] h-[53px] p-8 "
         >
           <img src={logo} alt="logo" className=" " />
-          {/* <h2>Gallivanter</h2> */}
-        </div>
+        
+        </div> */}
         <div className=" w-[95%] sm:w-[436px] shadow-card p-[28px] sm:p-[48px] rounded-lg bg-white ">
           <h1 className="text-center font-bold text-[20px] text-primary-800 mb-5 ">
             Create an account
