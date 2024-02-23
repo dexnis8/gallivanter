@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import GalliHeader from ".././components/header";
 import { sections } from ".././utils/section_data";
 // import { userCards } from "./utils/testimonial_data";
@@ -79,20 +80,20 @@ const LandingPage = () => {
         }
       />
       {/* Hero-Section */}
-      <div ref={homeRef} className="w-full lg:flex justify-center pt-24">
+      {/* <div ref={homeRef} className="w-full lg:flex justify-center pt-24">
         <div className=" lg:flex justify-between max-w-[1920px] ">
           <div className="mr-[16px] lg:ml-[160px] ml-[16px] mt-[64px] lg:mt-[120px] lg:w-1/2 ">
-            {/* <p className="bg-[#FDE2DE] text-[rgb(247,111,89)] border border-[#F76F59] rounded-full w-fit px-4 py-1">
+            <p className="bg-[#FDE2DE] text-[rgb(247,111,89)] border border-[#F76F59] rounded-full w-fit px-4 py-1">
               Launching Soon
-            </p> */}
+            </p>
             <p className="mt-8 text-[40px] lg:text-[56px] text-[#381914] font-extrabold leading-[46px] lg:leading-[68px] lg:w-full">
               Gallivanter: Where Adventure Meets Expertise, and Success Awaits
             </p>
-            {/* <p className="text-[#222] mt-6  lg:w-2/3 lg:text-[18px] font-medium lg:leading-[21px] ">
+            <p className="text-[#222] mt-6  lg:w-2/3 lg:text-[18px] font-medium lg:leading-[21px] ">
               Embrace your inner explorer, guide with wisdom, and achieve
               triumph together with Gallivanter. Join us to create a legacy of
               adventure, guidance, and success in Nigeria.
-            </p> */}
+            </p>
             <div
               className="bg-[#F76F59] hover:opacity-75 transition-all duration-300 cursor-pointer text-white px-6 py-3 rounded-full w-fit mt-12 "
               onClick={() => {
@@ -106,7 +107,7 @@ const LandingPage = () => {
             <img src="./assets/images/header.png" alt="" className="" />
           </div>
         </div>
-      </div>
+      </div> */}
 
       <div ref={homeRef}>
         {otherSections.map((section, index) => (
@@ -197,7 +198,7 @@ const LandingPage = () => {
           ))}
         </div></div>
       </div> */}
-
+      {/* 
       <div ref={signUpRef} className=" flex justify-center items-center">
         <div className="mx-[16px] lg:mx-[160px] my-[120px]">
           <h2 className="font-extrabold text-[54px] leading-[56px] text-center font-cooper-std">
@@ -210,7 +211,7 @@ const LandingPage = () => {
               type="success"
             />
           )}
-          {/* {success ? <div>Welcome to Gallivanter</div> : <div>Something went wrong</div>} */}
+          {success ? <div>Welcome to Gallivanter</div> : <div>Something went wrong</div>}
           <div className="mt-12">
             <div className=" gap-8">
               <div>
@@ -288,7 +289,7 @@ const LandingPage = () => {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
       <Footer />
     </div>
   );

@@ -1,6 +1,9 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 // Section.js
 // import React from "react";
+
+import { useNavigate } from "react-router-dom";
 
 const OtherSection = ({
   title,
@@ -10,7 +13,8 @@ const OtherSection = ({
   imageSrc,
   bgColor,
 }) => {
-  console.log(title);
+  // console.log(title);
+  const navigate = useNavigate();
   return (
     <>
       <div
@@ -30,8 +34,8 @@ const OtherSection = ({
               </p>
             ))}
             <div
-              className="mx-auto lg:mx-0 bg-[#F76F59] text-white px-6 py-3 rounded-full w-fit mt-4 lg:mt-8 "
-              // onClick={scrollFunction()}
+              className="mx-auto cursor-pointer hover:opacity-75 transition-all duration-300 lg:mx-0 bg-[#F76F59] text-white px-6 py-3 rounded-full w-fit mt-4 lg:mt-8 "
+              onClick={() => navigate("/auth/sign-up/user")}
             >
               {buttonText}
             </div>
