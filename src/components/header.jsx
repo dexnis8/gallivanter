@@ -55,7 +55,8 @@ const GalliHeader = ({
         <div className="flex items-center gap-3 md:gap-12 ">
           <FaBars color="black" className="md:hidden" onClick={openDrawer} />
 
-          <img className="h-10" src="/assets/images/icon.png" alt=""></img>
+          {/* <img className="h-10" src="/assets/images/icon.png" alt="" /> */}
+          <img className="h-10" src="/assets/images/logo.png" alt="" />
           <span className="md:flex gap-8 hidden">
             <NavLink to="/">
               {({ isActive }) => {
@@ -73,23 +74,21 @@ const GalliHeader = ({
               }}
             </NavLink>
 
-            {sessionStorage.getItem("role") !== "creator" && (
-              <NavLink to="/explore">
-                {({ isActive }) => {
-                  return (
-                    <h2
-                      className={`${
-                        isActive
-                          ? "text-[#E36A5D] font-semibold"
-                          : "text-black font-medium"
-                      } cursor-pointer`}
-                    >
-                      Explore
-                    </h2>
-                  );
-                }}
-              </NavLink>
-            )}
+            <NavLink to="/explore">
+              {({ isActive }) => {
+                return (
+                  <h2
+                    className={`${
+                      isActive
+                        ? "text-[#E36A5D] font-semibold"
+                        : "text-black font-medium"
+                    } cursor-pointer`}
+                  >
+                    Explore
+                  </h2>
+                );
+              }}
+            </NavLink>
 
             {isAuth && (
               <NavLink
