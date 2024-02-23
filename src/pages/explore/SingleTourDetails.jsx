@@ -67,15 +67,15 @@ const SingleTourDetails = () => {
                 stopOnHover={false}
                 animationHandler="fade"
               >
-                {[1, 2, 3].map((item) => (
+                {data?.data?.tour?.tourImagesData?.map((item) => (
                   <div
-                    key={item}
+                    key={item._id}
                     className="h-[400px] shadow-lg mb-2 bg-slate-600 rounded-lg overflow-hidden "
                   >
                     <img
-                      src={`/assets/images/tour${item}.jpg`}
+                      src={item.url}
                       className="object-cover w-full h-full"
-                      alt=""
+                      alt={item._id}
                     />
                   </div>
                 ))}
