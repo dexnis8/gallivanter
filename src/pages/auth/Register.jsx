@@ -592,7 +592,7 @@ const Register = () => {
               {({ isActive }) => (
                 <>
                   <span
-                    className={` border-x-0 px-5 sm:px-10 transition-all duration-300 w-full ${
+                    className={` border-x-0 px-5  transition-all duration-300 w-full ${
                       isActive ? "text-orange-500" : "text-primary-800"
                     } ${
                       isActive ? "font-semibold" : "font-normal"
@@ -607,7 +607,7 @@ const Register = () => {
               {({ isActive }) => (
                 <>
                   <span
-                    className={` border-x-0  transition-all duration-300 px-5 sm:px-10 w-full ${
+                    className={` border-x-0  transition-all duration-300 px-5 w-full ${
                       isActive ? "text-orange-500" : "text-primary-800"
                     } ${
                       isActive ? "font-semibold" : "font-normal"

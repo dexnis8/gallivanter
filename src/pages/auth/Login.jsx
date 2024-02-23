@@ -301,12 +301,12 @@ const Login = () => {
           </h1>
           <div>
             {/* Tabs should go below */}
-            <div className="grid grid-cols-2 text-center gap-5 mb-3">
+            <div className="grid grid-cols-2 text-center gap- mb-3">
               <NavLink to="user">
                 {({ isActive }) => (
                   <>
                     <span
-                      className={` border-x-0 px-5 sm:px-10 transition-all duration-300 w-full ${
+                      className={` border-x-0 px-5 sm:px- transition-all duration-300 w-full ${
                         isActive ? "text-orange-500" : "text-primary-800"
                       } ${
                         isActive ? "font-semibold" : "font-normal"
@@ -323,7 +323,7 @@ const Login = () => {
                 {({ isActive }) => (
                   <>
                     <span
-                      className={` border-x-0  transition-all duration-300 px-5 sm:px-10 w-full ${
+                      className={` border-x-0  transition-all duration-300 px-5 w-full ${
                         isActive ? "text-orange-500" : "text-primary-800"
                       } ${
                         isActive ? "font-semibold" : "font-normal"
