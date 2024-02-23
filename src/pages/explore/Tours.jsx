@@ -1,3 +1,4 @@
+/* eslint-disable no-unsafe-optional-chaining */
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 /* eslint-disable react-hooks/exhaustive-deps */
@@ -16,13 +17,14 @@ import { useLazyGetAllPublicToursQuery } from "../../redux/api/Services";
 import { ClipLoader } from "react-spinners";
 import { formatDate, formatPrice } from "../../utils/Formats";
 import { useNavigate } from "react-router-dom";
+import SearchIcon from "../../components/icons/SearchIcon";
 
 export function TourCard({ data }) {
   const navigate = useNavigate();
   return (
     <>
       <div
-        onClick={() => navigate(`/explore/tour/${data._id}`)}
+        onClick={() => navigate(`/explore/tour/${data?._id}`)}
         className="w-full mx-auto bg-white rounded-md overflow-hidden shadow-md hover:shadow-lg transition-transform hover:-translate-y-1 cursor-pointer"
       >
         {/* Image */}
@@ -160,6 +162,9 @@ const Tours = () => {
     value: [5, 10],
   });
 
+  const [search, setSearch] = useState("");
+  const [filteredTours, setFilteredTours] = useState([]);
+
   const handleSliderChange = (key, value) => {
     setPriceRange((prevState) => ({
       ...prevState,
@@ -167,7 +172,7 @@ const Tours = () => {
     }));
   };
 
-  console.log(priceRange);
+  // console.log(priceRange);
   const { errors } = formState;
 
   const handleClick2 = (event) => {
@@ -204,24 +209,49 @@ const Tours = () => {
   useEffect(() => {
     getAllPublicTours();
   }, []);
+  useEffect(() => {
+    // replace mockData with actual response from endpoint
+    if (search !== "") {
+      const result = data?.data?.tours.filter((tour) => {
+        return tour.title.toLowerCase().match(search.toLowerCase());
+      });
+      setFilteredTours([...result]);
+    }
 
+    if (data && search === "") {
+      setFilteredTours([...data?.data?.tours]);
+    }
+  }, [search, data]);
   console.log(data);
   console.log(error);
+  console.log(filteredTours);
   return (
     <>
       <div>
         <GalliHeader />
-        <div className="max-w-[1100px] mt-10 mx-auto  ">
-          <div className="flex justify-between">
-            <h1 className=" text-xl capitalize sm:text-2xl font-bold text-black-ercas mb-6">
+        <div className="max-w-[1100px] sm:mt-10 mx-auto p-5  ">
+          <div className="flex justify-between items-center">
+            <h1 className=" text-xl capitalize sm:text-2xl font-bold text-black-ercas">
               Trips
             </h1>
-            <p className="text-xl font-bold mb-2">
-              {data?.result} trips available
+            <p className="text-xl font-bold">
+              {isLoading ? <ClipLoader size={14} /> : data?.result} trips
+              available
             </p>
           </div>
-
-          <div className="grid grid-cols-4 items-center gap-6 ">
+          <div className="relative w-full sm:w-[45%] ">
+            <button className="absolute flex mt-4 justify-center h-full ml-2">
+              <SearchIcon />
+            </button>
+            <input
+              type="text"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="Search by tour name"
+              className="h-12  px-3 w-full  leading-6 outline-none text-black-1200 placeholder-black-1200 border-primary-800 text-sm bg-transparent border rounded-md pl-8"
+            />
+          </div>
+          <div className="hidden  grid-cols-3 lg:grid-cols-4 w-full items-center gap-2 sm:gap-6 ">
             <Select
               // isMulti
               options={amusementParks}
@@ -401,14 +431,18 @@ const Tours = () => {
             </div>
           </div>
 
-          <div className="tour-cards mt-10 grid grid-cols-3 gap-5">
+          <div className="tour-cards mt-10 grid sm:grid-cols-2 md:grid-cols-3 gap-5">
             {isLoading ? (
               <ClipLoader />
             ) : (
               <>
-                {data?.data?.tours.map((tour) => (
-                  <TourCard key={tour._id} data={tour} />
-                ))}
+                {filteredTours.length > 0 ? (
+                  filteredTours?.map((tour) => (
+                    <TourCard key={tour._id} data={tour} />
+                  ))
+                ) : (
+                  <p className="text-center sm:text-left">Tour not found</p>
+                )}
               </>
             )}
           </div>

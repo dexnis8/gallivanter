@@ -12,6 +12,7 @@ import { handleSubmit } from ".././utils/firebase";
 // import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { useNavigate } from "react-router-dom";
 // import Carousel from "./components/carousel";
 
 const LandingPage = () => {
@@ -22,6 +23,7 @@ const LandingPage = () => {
   const [organization, setOrganization] = useState("");
   const [loading, setLoading] = useState(false);
   const [success, setsuccess] = useState(false);
+  const navigate = useNavigate();
 
   const homeRef = useRef(null);
   const howItWorksRef = useRef(null);
@@ -290,6 +292,14 @@ const LandingPage = () => {
           </div>
         </div>
       </div> */}
+      <div className="flex justify-center items-center mt-5">
+        <button
+          className="mx-auto cursor-pointer hover:opacity-75 transition-all text-lg duration-300 lg:mx-0 bg-[#F76F59] text-white px-20 py-3 sm:py-6 rounded-full w-fit mt-4 lg:mt-8 "
+          onClick={() => navigate("/auth/sign-up/user")}
+        >
+          Get Started
+        </button>
+      </div>
       <Footer />
     </div>
   );

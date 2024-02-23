@@ -12,7 +12,7 @@ import {
 const Footer = () => {
   // const navigate = useNavigate();
   return (
-    <div className="sm:mt-24 p-[16px] md:p-[64px] items-center justify-center flex flex-col">
+    <div className=" p-[16px] md:p-[64px] items-center justify-center flex flex-col">
       <Divider className="bg-[#bdbdbd]" />
       <div className="sm:flex-row flex-col sm:gap-0 gap-5 flex sm:mt-24  max-w-[1920px]">
         <div className="sm:w-2/3">

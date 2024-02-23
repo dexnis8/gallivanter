@@ -3,6 +3,7 @@
 // Section.js
 // import React from "react";
 
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 const OtherSection = ({
@@ -15,6 +16,7 @@ const OtherSection = ({
 }) => {
   // console.log(title);
   const navigate = useNavigate();
+  const isAuth = useSelector((state) => state.authToken.isAuth);
   return (
     <>
       <div
@@ -35,7 +37,13 @@ const OtherSection = ({
             ))}
             <div
               className="mx-auto cursor-pointer hover:opacity-75 transition-all duration-300 lg:mx-0 bg-[#F76F59] text-white px-6 py-3 rounded-full w-fit mt-4 lg:mt-8 "
-              onClick={() => navigate("/auth/sign-up/user")}
+              onClick={() => {
+                !isAuth
+                  ? navigate("/auth/sign-up/user")
+                  : isAuth && sessionStorage.getItem("role") !== "creator"
+                  ? navigate("/user/joined-tours")
+                  : navigate("/dashboard/overview");
+              }}
             >
               {buttonText}
             </div>
