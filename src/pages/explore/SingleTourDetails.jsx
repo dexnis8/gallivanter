@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Carousel } from "react-responsive-carousel";
 import Footer from "../../components/footer";
@@ -13,6 +14,7 @@ import { formatDate, formatPrice } from "../../utils/Formats";
 import { useEffect } from "react";
 import { ClipLoader } from "react-spinners";
 import { toast } from "react-toastify";
+import { IteneryCard } from "../dashboard/creator/EditTour";
 
 const SingleTourDetails = () => {
   const { id } = useParams();
@@ -148,9 +150,28 @@ const SingleTourDetails = () => {
               </div>
             </div>
           </div>
-          <div className=" justify-center item-center mt-20 hidden">
-            <button className="py-3 hover:bg-primary-800 transition-all duration-300 px-10 text-sm font-bold bg-orange-500 rounded-full text-white">
-              Book Now
+
+          <div className="px-10 mt-10 py-5 rounded-lg shadow-md max-w-[1000px] mx-auto bg-white border ">
+            <h3 className="text-xl font-bold mb-3">Trip Itinerary</h3>
+            <p className="text-sm text-gray-500 mb-4  sm:w-1/2">
+              Show your itinerary to your guests. With this , guests can know
+              what to expect and how much fun it'll be.
+            </p>
+
+            <div className="iteneries grid gap-5 grid-cols-3">
+              {/* Map through iteneries here */}
+              {data?.data?.tour?.itinerary?.map((item, index) => (
+                <IteneryCard key={index} data={item} showDeleteBtn={false} />
+              ))}
+            </div>
+          </div>
+
+          <div className="flex justify-center item-center mt-20 ">
+            <button
+              onClick={handleJoinTour}
+              className="py-3 hover:bg-primary-800 transition-all duration-300 px-10 text-sm font-bold bg-orange-500 rounded-full text-white"
+            >
+              {joining ? <ClipLoader size={16} color="#fff" /> : " Join Tour"}
             </button>
           </div>
           <Footer />
