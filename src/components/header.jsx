@@ -55,8 +55,6 @@ const GalliHeader = ({
     <div className="sticky top-0 z-50 bg-white w-full h-[72px] md:h-[88px] shadow-md items-center flex justify-center">
       <div className="flex align-middle items-center justify-between mx-[16px] md:mx-[40px] lg:mx-[100px] w-full max-w-[1920px]">
         <div className="flex items-center gap-3 md:gap-12 ">
-          <FaBars color="black" className="hidden" onClick={openDrawer} />
-
           {/* <img className="h-10" src="/assets/images/icon.png" alt="" /> */}
           <img
             className="h-10"
@@ -134,7 +132,7 @@ const GalliHeader = ({
               <span className="p-[2px] rounded-full h-[40px] w-[40px]  border-orange-500 border-[1px]">
                 {/* <img src={avatar} alt="avatar" /> */}
               </span>
-              <span className="hidden sm:block hover:underline text-[16px] font-semibold">
+              <span className=" block hover:underline text-[16px] font-semibold">
                 {/* {formatString(userName, 7)} */}
 
                 {sessionStorage.getItem("role") === "creator"
@@ -164,7 +162,7 @@ const GalliHeader = ({
                   Profile Settings
                 </span>
               </MenuItem> */}
-              {!isAuth && matchMedia ? (
+              {/* {!isAuth && matchMedia ? (
                 <>
                   <MenuItem onClick={handleClose}>
                     <NavLink className={`text-base text-primary-800`} to={"/"}>
@@ -196,7 +194,7 @@ const GalliHeader = ({
                     </NavLink>
                   </MenuItem>
                 </>
-              ) : null}
+              ) : null} */}
               {sessionStorage.getItem("role") === "creator" &&
               isAuth &&
               matchMedia ? (
@@ -283,6 +281,24 @@ const GalliHeader = ({
                   </MenuItem>
                 </>
               ) : null}
+
+              {/* {!isAuth && matchMedia ? (
+                <>
+                  <MenuItem onClick={handleClose}>
+                    <NavLink className={`text-base text-primary-800`} to={"/"}>
+                      Home
+                    </NavLink>
+                  </MenuItem>
+                  <MenuItem onClick={handleClose}>
+                    <NavLink
+                      className={`text-base text-primary-800`}
+                      to={"/explore"}
+                    >
+                      Explore
+                    </NavLink>
+                  </MenuItem>
+                </>
+              ) : null} */}
               <MenuItem onClick={handleClose}>
                 <span
                   onClick={() => dispatch(unsetToken())}
@@ -294,24 +310,68 @@ const GalliHeader = ({
             </Menu>
           </div>
         ) : (
-          <div className="flex gap-1 sm:gap-3">
-            <div
-              className="bg-[#F76F59] text-sm sm:text-base hover:opacity-75 cursor-pointer text-white px-6 py-2 rounded-full"
-              onClick={() => {
-                navigate("/auth/sign-in/user");
-              }}
-            >
-              Sign In
+          <>
+            <div className="f">
+              <FaBars onClick={handleClick} color="black" className="block" />
+              <Menu
+                id="basic-menu"
+                anchorEl={anchorEl}
+                open={open}
+                onClose={handleClose}
+                MenuListProps={{
+                  "aria-labelledby": "basic-button",
+                }}
+              >
+                <MenuItem onClick={handleClose}>
+                  <NavLink className={`text-base text-primary-800`} to={"/"}>
+                    Home
+                  </NavLink>
+                </MenuItem>
+                <MenuItem onClick={handleClose}>
+                  <NavLink
+                    className={`text-base text-primary-800`}
+                    to={"/explore"}
+                  >
+                    Explore
+                  </NavLink>
+                </MenuItem>
+                <MenuItem onClick={handleClose}>
+                  <NavLink
+                    className={`text-base text-primary-800`}
+                    to={"/auth/sign-in/user"}
+                  >
+                    Sign In
+                  </NavLink>
+                </MenuItem>
+                <MenuItem onClick={handleClose}>
+                  <NavLink
+                    className={`text-base text-primary-800`}
+                    to={"/auth/sign-up/user"}
+                  >
+                    Sign Up
+                  </NavLink>
+                </MenuItem>
+              </Menu>
             </div>
-            <div
-              className="border hidden sm:block cursor-pointer hover:text-white hover:bg-[#F76F59] transition-all duration-300 border-[#F76F59] text-[#F76F59] px-6 py-2 rounded-full"
-              onClick={() => {
-                navigate("/auth/sign-up/user");
-              }}
-            >
-              Sign Up
+            <div className="hidden md:flex gap-1 sm:gap-3">
+              <div
+                className="bg-[#F76F59] text-sm sm:text-base hover:opacity-75 cursor-pointer text-white px-6 py-2 rounded-full"
+                onClick={() => {
+                  navigate("/auth/sign-in/user");
+                }}
+              >
+                Sign In
+              </div>
+              <div
+                className="border  sm:block cursor-pointer hover:text-white hover:bg-[#F76F59] transition-all duration-300 border-[#F76F59] text-[#F76F59] px-6 py-2 rounded-full"
+                onClick={() => {
+                  navigate("/auth/sign-up/user");
+                }}
+              >
+                Sign Up
+              </div>
             </div>
-          </div>
+          </>
         )}
       </div>
     </div>
