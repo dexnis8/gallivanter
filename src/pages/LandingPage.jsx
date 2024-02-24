@@ -12,7 +12,8 @@ import { handleSubmit } from ".././utils/firebase";
 // import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 // import Carousel from "./components/carousel";
 
 const LandingPage = () => {
@@ -24,6 +25,7 @@ const LandingPage = () => {
   const [loading, setLoading] = useState(false);
   const [success, setsuccess] = useState(false);
   const navigate = useNavigate();
+  const isAuth = useSelector((state) => state.authToken.isAuth);
 
   const homeRef = useRef(null);
   const howItWorksRef = useRef(null);
@@ -293,12 +295,25 @@ const LandingPage = () => {
         </div>
       </div> */}
       <div className="flex justify-center items-center mt-5">
-        <button
-          className="mx-auto cursor-pointer hover:opacity-75 transition-all text-lg duration-300 lg:mx-0 bg-[#F76F59] text-white px-20 py-3 sm:py-6 rounded-full w-fit mt-4 lg:mt-8 "
-          onClick={() => navigate("/auth/sign-up/user")}
-        >
-          Get Started
-        </button>
+        {isAuth ? (
+          <NavLink
+            to={`${
+              sessionStorage.getItem("role") === "creator"
+                ? "/dashboard/overview"
+                : "/user/joined-tours"
+            }`}
+            className={`mx-auto cursor-pointer hover:opacity-75 transition-all text-lg duration-300 lg:mx-0 bg-[#F76F59] text-white px-20 py-3 sm:py-6 rounded-full w-fit mt-4 lg:mt-8`}
+          >
+            Get Started For Free
+          </NavLink>
+        ) : (
+          <button
+            className="mx-auto cursor-pointer hover:opacity-75 transition-all text-lg duration-300 lg:mx-0 bg-[#F76F59] text-white px-20 py-3 sm:py-6 rounded-full w-fit mt-4 lg:mt-8 "
+            onClick={() => navigate('/auth/sign-up/user')}
+          >
+            Get Started For Free
+          </button>
+        )}
       </div>
       <Footer />
     </div>
