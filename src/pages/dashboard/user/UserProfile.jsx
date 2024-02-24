@@ -62,7 +62,10 @@ export const UserProfile = () => {
   useEffect(() => {
     console.log(newProfile);
     console.log(errorUpdating);
-  }, []);
+    if (newProfile?.status === "success") {
+      toast.success("Profile updated successfully");
+    }
+  }, [newProfile, errorUpdating]);
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 

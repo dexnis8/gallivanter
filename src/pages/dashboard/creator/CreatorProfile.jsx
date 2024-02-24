@@ -64,7 +64,7 @@ const CreatorProfile = () => {
   useEffect(() => {
     console.log(newProfile);
     console.log(errorUpdating);
-    if (isSuccess) {
+    if (newProfile?.status === "success") {
       toast.success("Profile updated successfully");
     }
   }, [newProfile, updatingProfile, errorUpdating]);
@@ -73,14 +73,14 @@ const CreatorProfile = () => {
       {loadingProfile ? (
         <ClipLoader />
       ) : (
-        <div className="px-10 py-5 rounded-lg shadow-md border">
+        <div className="sm:px-10 py-5 rounded-lg sm:shadow-md sm:border">
           <h3 className="text-xl font-bold mb-3">Personal Details</h3>
           <form
             onSubmit={handleSubmit(onFormSubmit)}
             noValidate
             className="flex flex-col gap-y-3 "
           >
-            <div className="w-1/2">
+            <div className="sm:w-1/2">
               <div className="flex flex-col gap-y-1">
                 <h4 className="text-sm mb-1 font-semibold mt-3 text-black-ercas ">
                   First Name

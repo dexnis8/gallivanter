@@ -122,10 +122,10 @@ export const Services = createApi({
       }),
     }),
     getUsersJoinedTours: builder.query({
-      query: (params) => ({
-        url: "/users/tours",
+      query: () => ({
+        url: `/users/tours/?sort=-createdAt`,
         method: "GET",
-        params,
+        
       }),
     }),
     getAllItenery: builder.query({

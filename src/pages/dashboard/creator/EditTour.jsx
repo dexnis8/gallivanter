@@ -283,13 +283,13 @@ export const EditTour = () => {
       ) : (
         <div className="flex flex-col gap-8">
           <form onSubmit={handleSubmit(onFormSubmit)} noValidate>
-            <div className="px-10 py-5 rounded-lg shadow-md border">
+            <div className="sm:px-10 py-5 rounded-lg sm:shadow-md sm:border">
               <h3 className="text-xl font-bold mb-2">Tour Details</h3>
-              <p className="w-[60%] mb-3 text-gray-500 text-base ">
+              <p className="sm:w-[60%] mb-3 text-gray-500 text-base ">
                 Start building your trip by sharing the location, dates, and
                 what’s included in the experience.
               </p>
-              <section className="flex flex-col gap-y-3 w-[60%] ">
+              <section className="flex flex-col gap-y-3 sm:w-[60%] ">
                 <div className="flex flex-col gap-y-1">
                   <h4 className="text-sm mb-1 font-semibold mt-3 text-black-ercas ">
                     Tour name
@@ -513,7 +513,7 @@ export const EditTour = () => {
 
             <div className="flex flex-col gap-8 mt-8">
               {/* Tour Photos */}
-              <div className="px-10 py-5 rounded-lg shadow-md border">
+              <div className="px-2 sm:px-10 py-5 rounded-lg shadow-md border">
                 <h3 className="text-xl font-bold mb-3"> Tour photos </h3>
                 <div
                   onDragOver={onDragOver}
@@ -561,7 +561,7 @@ export const EditTour = () => {
                 <FormHelperText error>
                   {imgErr || validationError}
                 </FormHelperText>
-                <div className="relative mt-3 grid grid-cols-3 gap-2 ">
+                <div className="relative mt-3 grid md:grid-cols-2 lg:grid-cols-3 gap-2 ">
                   {loading ? (
                     <ClipLoader />
                   ) : (
@@ -590,14 +590,14 @@ export const EditTour = () => {
               </div>
 
               {/* Itenery */}
-              <div className="px-10 py-5 rounded-lg shadow-md border">
+              <div className="px-2 sm:px-10 py-5 rounded-lg shadow-md border">
                 <h3 className="text-xl font-bold mb-3">Trip Itinerary</h3>
                 {/* <p className="text-sm text-gray-500 mb-4  sm:w-1/2">
                 Show your itinerary to your guests. With this , guests can know
                 what to expect and how much fun it'll be.
               </p> */}
 
-                <div className="iteneries grid gap-5 grid-cols-3">
+                <div className="iteneries grid gap-5 md:grid-cols-2 lg:grid-cols-3">
                   {/* Map through iteneries here */}
                   {loading_iteneries ? (
                     <ClipLoader />

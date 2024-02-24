@@ -26,7 +26,7 @@ const CreatorSingleTour = () => {
       ) : (
         <div>
           <GalliHeader />
-          <div className="max-w-[1000px] grid grid-cols-10 gap-8 p-5 bg-wite rounded-lg shadow-lg mx-auto mt-10 border">
+          <div className="max-w-[1000px] grid md:grid-cols-10 gap-8 p-5 bg-wite rounded-lg shadow-lg mx-auto mt-10 border">
             <div className=" col-span-6 overflow-hidden rounded-lg">
               <Carousel
                 autoPlay
@@ -44,7 +44,7 @@ const CreatorSingleTour = () => {
                 {data?.data?.tour?.tourImagesData?.map((item) => (
                   <div
                     key={item._id}
-                    className="h-[400px] shadow-lg mb-2 bg-slate-600 rounded-lg overflow-hidden "
+                    className="h-[200px] sm:h-[400px] shadow-lg mb-2 bg-slate-600 rounded-lg overflow-hidden "
                   >
                     <img
                       src={item.url}
@@ -135,14 +135,14 @@ const CreatorSingleTour = () => {
             </div>
           </div>
           {/* Itenery */}
-          <div className="px-10 mt-10 py-5 rounded-lg shadow-md max-w-[1000px] mx-auto bg-white border ">
+          <div className="px-5 sm:px-10 mt-10 py-5 rounded-lg shadow-md max-w-[1000px] mx-auto bg-white border ">
             <h3 className="text-xl font-bold mb-3">Trip Itinerary</h3>
             <p className="text-sm text-gray-500 mb-4  sm:w-1/2">
               Show your itinerary to your guests. With this , guests can know
               what to expect and how much fun it'll be.
             </p>
 
-            <div className="iteneries grid gap-5 grid-cols-3">
+            <div className="iteneries grid gap-5 lg:grid-cols-3 md:grid-cols-2">
               {/* Map through iteneries here */}
               {data?.data?.tour?.itinerary?.map((item, index) => (
                 <IteneryCard key={index} data={item} showDeleteBtn={false} />

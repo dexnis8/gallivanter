@@ -44,7 +44,7 @@ export const DashboardLayout = () => {
             </div>
           </div>
           <div className=" col-span-5 sm:px-0 px-5">
-            <div className="border bg-white rounded-lg shadow-md px-5 py-3 sm:py-5">
+            <div className="sm:border sm:bg-white rounded-lg sm:shadow-md sm:px-5 py-3 sm:py-5">
               <div className="flex justify-between items-center  mb-6">
                 <h1 className=" text-xl capitalize sm:text-2xl font-bold text-black-ercas">
                   {title}

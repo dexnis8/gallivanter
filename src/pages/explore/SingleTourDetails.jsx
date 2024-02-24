@@ -77,7 +77,7 @@ const SingleTourDetails = () => {
                 {data?.data?.tour?.tourImagesData?.map((item) => (
                   <div
                     key={item._id}
-                    className="h-[300px] sm:h-[400px] shadow-lg mb-2 bg-slate-600 rounded-lg overflow-hidden "
+                    className="h-[200px] sm:h-[400px] shadow-lg mb-2 bg-slate-600 rounded-lg overflow-hidden "
                   >
                     <img
                       src={item.url}
@@ -119,7 +119,7 @@ const SingleTourDetails = () => {
                   <p className="font-semibold text-gray-500">
                     Creator:{" "}
                     <span className="font-normal">
-                      {data?.data?.tour?.creatorName || "NA"}
+                      {data?.data?.tour?.companyName || "NA"}
                     </span>
                   </p>
                   <p className="font-semibold text-gray-500">
