@@ -31,13 +31,13 @@ export const DashboardLayout = () => {
   }, [location.pathname]);
   return (
     <>
-      <div className="max-w-[1440px] bg-[#F6F4F4] h-[100%] mx-auto shadow-card">
+      <div className="max-w-[1440px] sm:bg-[#F6F4F4] w-full h-[100%] mx-auto sm:shadow-card">
         <div className="z-20 sticky top-0">
           {" "}
           {/* <Navbar title={titleApp} /> */}
           <GalliHeader />
         </div>
-        <div className="flex flex-col  lg:grid lg:grid-cols-7 gap-10 md:m-10 mt-20 ">
+        <div className="flex flex-col  lg:grid lg:grid-cols-7 gap-10 md:m-10 sm:mt-20 ">
           <div className="  pb-5 bg-grey-white  lg:block col-span-2  border-[#000]  sticky">
             <div className="hidden lg:block ">
               <Sidebar />

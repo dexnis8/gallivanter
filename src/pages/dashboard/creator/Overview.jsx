@@ -96,7 +96,7 @@ const SearchFilter = ({ search, setSearch }) => {
                 aria-expanded={open ? "true" : undefined}
                 //uncomment to active filter sorting
                 // onClick={handleClick}
-                className="flex items-center text-black-1200 text-sm leading-6 gap-1 border  border-slate-600 rounded-md w-24 align-middle justify-center bg-white h-12"
+                className="hidden sm:flex items-center text-black-1200 text-sm leading-6 gap-1 border  border-slate-600 rounded-md w-24 align-middle justify-center bg-white h-12"
               >
                 <Filter size={16} />
                 <p className="test-sm"> Filter by</p>
@@ -155,7 +155,7 @@ const SearchFilter = ({ search, setSearch }) => {
                 </div>
               </Menu>
             </div>
-            <div className="relative">
+            <div className="relative w-full">
               <button className="absolute flex mt-4 justify-center h-full ml-2">
                 <SearchIcon />
               </button>
@@ -164,7 +164,7 @@ const SearchFilter = ({ search, setSearch }) => {
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder="Search by tour name"
-                className="h-12  px-3 lg:w-[250px]  leading-6 text-black-1200 placeholder-black-1200  border-slate-600 text-sm bg-transparent border rounded-md pl-8"
+                className="h-12  px-3 w-full lg:w-[250px]  leading-6 text-black-1200 placeholder-black-1200  border-slate-600 text-sm bg-transparent border rounded-md pl-8"
               />
             </div>
           </div>

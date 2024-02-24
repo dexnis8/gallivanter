@@ -114,7 +114,7 @@ export const ToursJoined = () => {
   console.log(data);
   console.log(error);
   useEffect(() => {
-    getUsersJoinedTours();
+    getUsersJoinedTours({ state: "published" });
   }, [refetchTours]);
   return (
     <>

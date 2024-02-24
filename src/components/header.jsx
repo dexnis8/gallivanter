@@ -312,7 +312,11 @@ const GalliHeader = ({
         ) : (
           <>
             <div className="f">
-              <FaBars onClick={handleClick} color="black" className="block" />
+              <FaBars
+                onClick={handleClick}
+                color="black"
+                className={`${matchMedia ? "block" : "hidden"}`}
+              />
               <Menu
                 id="basic-menu"
                 anchorEl={anchorEl}
