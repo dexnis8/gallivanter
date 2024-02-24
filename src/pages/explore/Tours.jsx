@@ -239,7 +239,7 @@ const Tours = () => {
               available
             </p>
           </div>
-          <div className="relative w-full sm:w-[45%] ">
+          <div className="relative w-full sm:w-[45%]  mt-4">
             <button className="absolute flex mt-4 justify-center h-full ml-2">
               <SearchIcon />
             </button>
