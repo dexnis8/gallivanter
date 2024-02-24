@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-import { Menu, MenuItem } from "@mui/material";
+import { Menu, MenuItem, useMediaQuery } from "@mui/material";
 import { Drawer } from "antd";
 import React, { useEffect, useRef, useState } from "react";
 import { FaBars, FaHamburger } from "react-icons/fa";
@@ -24,6 +24,8 @@ const GalliHeader = ({
   const [anchorEl, setAnchorEl] = useState(null);
   const isAuth = useSelector((state) => state.authToken.isAuth);
   const open = Boolean(anchorEl);
+  const matchMedia = useMediaQuery("(max-width:767px)");
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -53,7 +55,7 @@ const GalliHeader = ({
     <div className="sticky top-0 z-50 bg-white w-full h-[72px] md:h-[88px] shadow-md items-center flex justify-center">
       <div className="flex align-middle items-center justify-between mx-[16px] md:mx-[40px] lg:mx-[100px] w-full max-w-[1920px]">
         <div className="flex items-center gap-3 md:gap-12 ">
-          <FaBars color="black" className="md:hidden" onClick={openDrawer} />
+          <FaBars color="black" className="hidden" onClick={openDrawer} />
 
           {/* <img className="h-10" src="/assets/images/icon.png" alt="" /> */}
           <img
@@ -162,6 +164,125 @@ const GalliHeader = ({
                   Profile Settings
                 </span>
               </MenuItem> */}
+              {!isAuth && matchMedia ? (
+                <>
+                  <MenuItem onClick={handleClose}>
+                    <NavLink className={`text-base text-primary-800`} to={"/"}>
+                      Home
+                    </NavLink>
+                  </MenuItem>
+                  <MenuItem onClick={handleClose}>
+                    <NavLink
+                      className={`text-base text-primary-800`}
+                      to={"/explore"}
+                    >
+                      Explore
+                    </NavLink>
+                  </MenuItem>
+                  <MenuItem onClick={handleClose}>
+                    <NavLink
+                      className={`text-base text-primary-800`}
+                      to={"/auth/sign-in/user"}
+                    >
+                      Sign In
+                    </NavLink>
+                  </MenuItem>
+                  <MenuItem onClick={handleClose}>
+                    <NavLink
+                      className={`text-base text-primary-800`}
+                      to={"/auth/sign-up/user"}
+                    >
+                      Sign Up
+                    </NavLink>
+                  </MenuItem>
+                </>
+              ) : null}
+              {sessionStorage.getItem("role") === "creator" &&
+              isAuth &&
+              matchMedia ? (
+                <>
+                  <MenuItem onClick={handleClose}>
+                    <NavLink className={`text-base text-primary-800`} to={"/"}>
+                      Home
+                    </NavLink>
+                  </MenuItem>
+                  <MenuItem onClick={handleClose}>
+                    <NavLink
+                      className={`text-base text-primary-800`}
+                      to={"/explore"}
+                    >
+                      Explore
+                    </NavLink>
+                  </MenuItem>
+                  <MenuItem onClick={handleClose}>
+                    <NavLink
+                      className={`text-base text-primary-800`}
+                      to={"/dashboard/overview"}
+                    >
+                      Overview
+                    </NavLink>
+                  </MenuItem>
+                  <MenuItem onClick={handleClose}>
+                    <NavLink
+                      className={`text-base text-primary-800`}
+                      to={"/dashboard/created-tours"}
+                    >
+                      Created Tours
+                    </NavLink>
+                  </MenuItem>
+                  <MenuItem onClick={handleClose}>
+                    <NavLink
+                      className={`text-base text-primary-800`}
+                      to={"/dashboard/create-tour"}
+                    >
+                      Create Tour
+                    </NavLink>
+                  </MenuItem>
+                  <MenuItem onClick={handleClose}>
+                    <NavLink
+                      className={`text-base text-primary-800`}
+                      to={"/dashboard/creator/profile"}
+                    >
+                      Profile
+                    </NavLink>
+                  </MenuItem>
+                </>
+              ) : null}
+              {sessionStorage.getItem("role") !== "creator" &&
+              isAuth &&
+              matchMedia ? (
+                <>
+                  <MenuItem onClick={handleClose}>
+                    <NavLink className={`text-base text-primary-800`} to={"/"}>
+                      Home
+                    </NavLink>
+                  </MenuItem>
+                  <MenuItem onClick={handleClose}>
+                    <NavLink
+                      className={`text-base text-primary-800`}
+                      to={"/explore"}
+                    >
+                      Explore
+                    </NavLink>
+                  </MenuItem>
+                  <MenuItem onClick={handleClose}>
+                    <NavLink
+                      className={`text-base text-primary-800`}
+                      to={"/user/joined-tours"}
+                    >
+                      Tours Joined
+                    </NavLink>
+                  </MenuItem>
+                  <MenuItem onClick={handleClose}>
+                    <NavLink
+                      className={`text-base text-primary-800`}
+                      to={"/user/profile"}
+                    >
+                      Profile
+                    </NavLink>
+                  </MenuItem>
+                </>
+              ) : null}
               <MenuItem onClick={handleClose}>
                 <span
                   onClick={() => dispatch(unsetToken())}

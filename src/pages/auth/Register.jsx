@@ -613,7 +613,7 @@ const Register = () => {
                       isActive ? "font-semibold" : "font-normal"
                     } border-t-0 ${isActive && "border-orange-500"} border-2 `}
                   >
-                    As Bussiness
+                    As Business
                   </span>
                 </>
               )}

@@ -34,14 +34,14 @@ export const UserDashboardLayout = () => {
           {/* <Navbar title={titleApp} /> */}
           <GalliHeader />
         </div>
-        <div className="flex flex-col  lg:grid lg:grid-cols-7 gap-10 md:m-10 mt-20 ">
+        <div className="flex flex-col  lg:grid lg:grid-cols-7 gap-10 md:m-10 sm:mt-0 ">
           <div className="  pb-5 bg-grey-white  lg:block col-span-2  border-[#000]  sticky">
             <div className="hidden lg:block ">
               <UserSideBar />
             </div>
           </div>
           <div className=" col-span-5 sm:px-0 px-5">
-            <div className="border bg-white rounded-lg shadow-md px-5 py-3 sm:py-5">
+            <div className="sm:border sm:bg-white rounded-lg sm:shadow-md sm:px-5 py-3 sm:py-5">
               <div className="flex justify-between items-center  mb-6">
                 <h1 className=" text-xl capitalize sm:text-2xl font-bold text-black-ercas">
                   {title}

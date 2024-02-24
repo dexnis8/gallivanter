@@ -168,5 +168,6 @@ export const {
   useUserJoinTourMutation,
   useUpdateTourMutation,
   useDeleteImageMutation,
+  useLazyGetUsersJoinedToursQuery,
   // useGetCategoriesQuery,
 } = Services;

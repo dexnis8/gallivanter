@@ -20,7 +20,7 @@ export const UserSideBar = () => {
     <>
       <div className="shadow-md rounded-lg bg-white overflow-hidden">
         <div className="image relative h-[70px] bg-gray-100 ">
-          <span className="h-[100px] w-[100px] overflow-hidden rounded-full absolute translate-x-[100%] translate-y-[30%] bg-gray-200 ">
+          <span className="h-[100px] w-[100px] overflow-hidden rounded-full absolute xl:translate-x-[100%] translate-x-[80%] translate-y-[30%] bg-gray-200 ">
             <img
               src={profile?.data?.user?.creatorImageUrl}
               className="w-full h-full"

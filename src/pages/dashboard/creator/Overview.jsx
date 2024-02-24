@@ -299,7 +299,6 @@ const Overview = () => {
           {formatString(row?.firstName, 15)}
         </p>
       ),
-      grow: 1.5,
     },
     {
       name: "Last name",
@@ -314,9 +313,10 @@ const Overview = () => {
       name: "Email",
       cell: (row) => (
         <p className="text-sm ml-3 font-normal text-left text-black-1200 whitespace-nowrap">
-          {row?.email}
+          {formatString(row?.email, 20)}
         </p>
       ),
+      grow: 1.5,
     },
     {
       name: "Tour joined",

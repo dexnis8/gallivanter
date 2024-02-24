@@ -1,9 +1,16 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/no-unescaped-entities */
 /* eslint-disable react/prop-types */
 import { useNavigate } from "react-router-dom";
 import { formatDate, formatPrice } from "../../../utils/Formats";
-import { useGetUsersJoinedToursQuery } from "../../../redux/api/Services";
+import {
+  useGetUsersJoinedToursQuery,
+  useLazyGetUsersJoinedToursQuery,
+} from "../../../redux/api/Services";
 import { ClipLoader } from "react-spinners";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
 
 // import { TourCard } from "../../explore/Tours";
 function TourCard({ data }) {
@@ -97,14 +104,21 @@ function TourCard({ data }) {
 
 export const ToursJoined = () => {
   const navigate = useNavigate();
-  const { data, isLoading, error } = useGetUsersJoinedToursQuery();
+  // const { data, isLoading, error } = useGetUsersJoinedToursQuery();
+  const [getUsersJoinedTours, { data, isLoading, error }] =
+    useLazyGetUsersJoinedToursQuery();
+  const refetchTours = useSelector(
+    (state) => state.authToken.refetchJoinedTours
+  );
 
   console.log(data);
   console.log(error);
-
+  useEffect(() => {
+    getUsersJoinedTours();
+  }, [refetchTours]);
   return (
     <>
-      <div className="tour-cards mt-10 grid grid-cols-3 gap-5">
+      <div className="tour-cards mt-10 grid sm:grid-cols-2 md:grid-cols-3 gap-5">
         {isLoading ? (
           <ClipLoader />
         ) : (

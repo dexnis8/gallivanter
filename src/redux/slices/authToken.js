@@ -6,6 +6,7 @@ const initialState = {
   // isAuth: true,
   createTourStep: 1,
   refetchItinery: false,
+  refetchJoinedTours: false,
   tour_id: "",
   user: {
     uuid: "",
@@ -46,6 +47,9 @@ const AuthTokenSlice = createSlice({
     refetchItineries: (state) => {
       state.refetchItinery = !state.refetchItinery;
     },
+    refetchUserJoinedTours: (state) => {
+      state.refetchJoinedTours = !state.refetchJoinedTours;
+    },
     setTourId: (state, action) => {
       state.tour_id = action.payload;
     },
@@ -59,5 +63,6 @@ export const {
   nextTourStep,
   refetchItineries,
   setTourId,
+  refetchUserJoinedTours,
 } = AuthTokenSlice.actions;
 export default AuthTokenSlice.reducer;

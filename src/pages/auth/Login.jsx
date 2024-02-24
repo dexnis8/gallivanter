@@ -331,7 +331,7 @@ const Login = () => {
                         isActive && "border-orange-500"
                       } border-2 `}
                     >
-                      As Bussiness
+                      As Business
                     </span>
                   </>
                 )}

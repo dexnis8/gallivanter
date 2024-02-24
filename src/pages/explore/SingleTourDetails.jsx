@@ -15,10 +15,13 @@ import { useEffect } from "react";
 import { ClipLoader } from "react-spinners";
 import { toast } from "react-toastify";
 import { IteneryCard } from "../dashboard/creator/EditTour";
+import { useDispatch } from "react-redux";
+import { refetchUserJoinedTours } from "../../redux/slices/authToken";
 
 const SingleTourDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const { data, isLoading, error } = useGetSinglePublicTourQuery({ id });
   const [
@@ -38,6 +41,7 @@ const SingleTourDetails = () => {
     if (status?.status === "success") {
       toast.success(data.message);
       navigate("/user/joined-tours");
+      dispatch(refetchUserJoinedTours());
     }
     if (status?.status === "error") {
       toast.error(status?.message);
@@ -54,7 +58,8 @@ const SingleTourDetails = () => {
       ) : (
         <div>
           <GalliHeader />
-          <div className="max-w-[1000px] grid grid-cols-10 gap-8 p-5 bg-wite rounded-lg shadow-lg mx-auto mt-10 border">
+          <h1 className="p-5 md:hidden text-2xl font-bold">Tour Details</h1>
+          <div className="max-w-[1000px] md:grid grid-cols-10 gap-8 p-5 bg-wite rounded-lg shadow-lg mx-auto sm:mt-10 border">
             <div className=" col-span-6 overflow-hidden rounded-lg">
               <Carousel
                 autoPlay
@@ -72,7 +77,7 @@ const SingleTourDetails = () => {
                 {data?.data?.tour?.tourImagesData?.map((item) => (
                   <div
                     key={item._id}
-                    className="h-[400px] shadow-lg mb-2 bg-slate-600 rounded-lg overflow-hidden "
+                    className="h-[300px] sm:h-[400px] shadow-lg mb-2 bg-slate-600 rounded-lg overflow-hidden "
                   >
                     <img
                       src={item.url}
@@ -151,14 +156,14 @@ const SingleTourDetails = () => {
             </div>
           </div>
 
-          <div className="px-10 mt-10 py-5 rounded-lg shadow-md max-w-[1000px] mx-auto bg-white border ">
+          <div className="px-5 sm:px-10 mt-10 py-5 rounded-lg shadow-md max-w-[1000px] mx-auto bg-white border ">
             <h3 className="text-xl font-bold mb-3">Trip Itinerary</h3>
             <p className="text-sm text-gray-500 mb-4  sm:w-1/2">
               Show your itinerary to your guests. With this , guests can know
               what to expect and how much fun it'll be.
             </p>
 
-            <div className="iteneries grid gap-5 grid-cols-3">
+            <div className="iteneries grid gap-5 md:grid-cols-2 lg:grid-cols-3">
               {/* Map through iteneries here */}
               {data?.data?.tour?.itinerary?.map((item, index) => (
                 <IteneryCard key={index} data={item} showDeleteBtn={false} />
