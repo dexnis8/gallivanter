@@ -1,19 +1,24 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 // import React from 'react'
 
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { useGetCreatorProfileQuery } from "../../../redux/api/Services";
 import { SyncLoader } from "react-spinners";
 import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { setUserName } from "../../../redux/slices/authToken";
 
 export const Sidebar = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const { data: profile, isLoading, error } = useGetCreatorProfileQuery();
   useEffect(() => {
-    sessionStorage.setItem("cm_name", profile?.data?.companyName);
+    // sessionStorage.setItem("cm_name", profile?.data?.companyName);
     sessionStorage.setItem("role", profile?.data?.role);
-  }, [profile]);
+    dispatch(setUserName(profile?.data?.companyName));
+  }, [profile, error]);
   console.log(profile);
   console.log(error);
 

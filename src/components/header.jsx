@@ -18,14 +18,14 @@ const GalliHeader = ({
 }) => {
   const dispatch = useDispatch();
   const location = useLocation();
-  const [userName, setUserName] = useState("");
   const [drawer, setDrawer] = useState(false);
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = useState(null);
   const isAuth = useSelector((state) => state.authToken.isAuth);
   const open = Boolean(anchorEl);
   const matchMedia = useMediaQuery("(max-width:767px)");
-
+  const userName = useSelector((state) => state.authToken.userName);
+  // console.log(userName);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -41,15 +41,6 @@ const GalliHeader = ({
   const onClose = () => {
     setDrawer(false);
   };
-  useEffect(() => {
-    setUserName(
-      `${
-        sessionStorage.getItem("role") === "creator"
-          ? sessionStorage.getItem("cm_name")
-          : sessionStorage.getItem("f_name")
-      }`
-    );
-  }, []);
 
   return (
     <div className="sticky top-0 z-50 bg-white w-full h-[72px] md:h-[88px] shadow-md items-center flex justify-center">
@@ -133,11 +124,7 @@ const GalliHeader = ({
                 {/* <img src={avatar} alt="avatar" /> */}
               </span>
               <span className=" block hover:underline text-[16px] font-semibold">
-                {/* {formatString(userName, 7)} */}
-
-                {sessionStorage.getItem("role") === "creator"
-                  ? sessionStorage.getItem("cm_name")
-                  : sessionStorage.getItem("f_name")}
+                {formatString(userName, 7)}
               </span>
               <span
                 className={`${

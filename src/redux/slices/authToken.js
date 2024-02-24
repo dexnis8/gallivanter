@@ -7,6 +7,7 @@ const initialState = {
   createTourStep: 1,
   refetchItinery: false,
   refetchJoinedTours: false,
+  userName: sessionStorage.getItem("user"),
   tour_id: "",
   user: {
     uuid: "",
@@ -33,6 +34,10 @@ const AuthTokenSlice = createSlice({
       state.user.first_name = action.payload?.first_name;
       state.user.last_name = action.payload?.last_name;
       state.user.whatsapp_number = action.payload?.whatsapp_number;
+    },
+    setUserName: (state, action) => {
+      sessionStorage.setItem("user", action.payload);
+      state.userName = action.payload;
     },
     unsetToken: (state) => {
       sessionStorage.removeItem("tk");
@@ -64,5 +69,6 @@ export const {
   refetchItineries,
   setTourId,
   refetchUserJoinedTours,
+  setUserName,
 } = AuthTokenSlice.actions;
 export default AuthTokenSlice.reducer;

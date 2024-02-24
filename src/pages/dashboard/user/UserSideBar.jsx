@@ -4,15 +4,19 @@ import { NavLink, useLocation } from "react-router-dom";
 import { useGetUserProfileQuery } from "../../../redux/api/Services";
 import { useEffect } from "react";
 import { SyncLoader } from "react-spinners";
+import { useDispatch } from "react-redux";
+import { setUserName } from "../../../redux/slices/authToken";
 
 export const UserSideBar = () => {
   const location = useLocation();
+  const dispatch = useDispatch();
 
   const { data: profile, isLoading, error } = useGetUserProfileQuery();
   useEffect(() => {
-    sessionStorage.setItem("f_name", profile?.data?.user?.firstName);
+    // sessionStorage.setItem("f_name", profile?.data?.user?.firstName);
+    dispatch(setUserName(profile?.data?.user?.firstName));
     sessionStorage.setItem("role", profile?.data?.user?.role);
-  }, [profile]);
+  }, [profile, error, dispatch]);
   console.log(profile);
   console.log(error);
 
