@@ -39,7 +39,10 @@ const SingleTourDetails = () => {
     console.log(status);
     console.log(error_joining);
     if (status?.status === "success") {
-      toast.success(data.message);
+      // toast.success(data.message);
+      toast.success(
+        "Tour joined successfully! Kindly check your mail for payment link"
+      );
       navigate("/user/joined-tours");
       dispatch(refetchUserJoinedTours());
     }
@@ -95,7 +98,7 @@ const SingleTourDetails = () => {
                     {data?.data?.tour?.title}
                   </h2>
                   <span className="text-xl   font-semibold text-primary-800 ">
-                    Starting at ${formatPrice(data?.data?.tour?.price)}
+                    Starting at ₦{formatPrice(data?.data?.tour?.price)}
                   </span>
                 </div>
               </div>

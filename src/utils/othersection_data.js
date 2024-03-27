@@ -1,18 +1,18 @@
 export const otherSections = [
-  {
-    title: "For Tour Agents / Providers",
-    subtitle: "Grow Your Tour Business with Gallivanter",
-    description: [
-      {
-        title: "Reach New Audiences",
-        description:
-          "Effortlessly list and promote your trips, manage bookings, and boost your bookings.",
-      },
-    ],
-    buttonText: "Get started for free",
-    imageSrc: "./assets/images/s-3.png",
-    bgColor: "bg-white",
-  },
+  // {
+  //   title: "For Tour Agents / Providers",
+  //   subtitle: "Grow Your Tour Business with Gallivanter",
+  //   description: [
+  //     {
+  //       title: "Reach New Audiences",
+  //       description:
+  //         "Effortlessly list and promote your trips, manage bookings, and boost your bookings.",
+  //     },
+  //   ],
+  //   buttonText: "Get started for free",
+  //   imageSrc: "./assets/images/s-3.png",
+  //   bgColor: "bg-white",
+  // },
   {
     title: "For Tourists",
     subtitle: "Join fellow adventurers on unique trips across Nigeria",
