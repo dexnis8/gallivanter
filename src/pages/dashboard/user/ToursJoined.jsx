@@ -94,7 +94,8 @@ function TourCard({ data }) {
 
           {/* Price Button */}
           <button className="text-orange-500 text-lg font-bold  py-2 rounded-full transition-colors">
-            Starting at ${formatPrice(data?.price)}
+            Starting at {data?.currency === "USD" ? "$" : "₦"}
+            {formatPrice(data?.price)}
           </button>
         </div>
       </div>

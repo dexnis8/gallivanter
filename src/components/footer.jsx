@@ -4,8 +4,10 @@ import {
   FaFacebook,
   FaInstagram,
   FaLinkedin,
+  FaSnapchat,
   FaTiktok,
   FaTwitter,
+  FaYoutube,
 } from "react-icons/fa";
 // import { useNavigate } from "react-router-dom";
 
@@ -34,28 +36,43 @@ const Footer = () => {
             size={24}
             color={`#381914`}
             className="cursor-pointer"
-            onClick={
-              () => {}
-              // window.open("https://twitter.com/JoinSparkApp", "_blank")
-            }
+            onClick={() => {
+              window.open("https://twitter.com/GallivanterAfri/", "_blank");
+            }}
           />
-          <FaFacebook
+          <FaYoutube
             size={24}
             color={`#381914`}
             className="cursor-pointer"
             onClick={() =>
-              // window.open("https://www.facebook.com/joinsparkclub/", "_blank")
-              {}
+              window.open(
+                "https://www.youtube.com/@gallivanterafrica/",
+                "_blank"
+              )
             }
+          />
+
+          <FaFacebook
+            size={24}
+            color={`#381914`}
+            className="cursor-pointer"
+            onClick={() => {
+              window.open(
+                " https://www.facebook.com/profile.php?id=61557671332594/",
+                "_blank"
+              );
+            }}
           />
           <FaInstagram
             size={24}
             color={`#381914`}
             className="cursor-pointer"
-            onClick={() =>
-              // window.open("https://instagram.com/joinsparkapp", "_blank")
-              {}
-            }
+            onClick={() => {
+              window.open(
+                " https://www.instagram.com/gallivanterafrica/",
+                "_blank"
+              );
+            }}
           />
           <FaLinkedin
             size={24}
@@ -63,8 +80,19 @@ const Footer = () => {
             className="cursor-pointer"
             onClick={() =>
               window.open(
-                // "https://www.linkedin.com/company/joinsparkapp/about/",                                "_blank"
-                {}
+                "https://www.linkedin.com/company/gallivanter-africa/",
+                "_blank"
+              )
+            }
+          />
+          <FaSnapchat
+            size={24}
+            color={`#381914`}
+            className="cursor-pointer"
+            onClick={() =>
+              window.open(
+                "https://www.snapchat.com/add/gallivanterafri/",
+                "_blank"
               )
             }
           />
@@ -73,8 +101,7 @@ const Footer = () => {
             color={`#381914`}
             className="cursor-pointer"
             onClick={() =>
-              // window.open("https://www.tiktok.com/@joinsparkapp", "_blank")
-              {}
+              window.open("https://tiktok.com/@gallivanterafrica/", "_blank")
             }
           />
         </div>
