@@ -148,7 +148,7 @@ const SingleTourDetails = () => {
                 </div>
                 <div className="my-8">
                   <a
-                    href="https://paystack.com/pay/u10wmz06tm"
+                    href="https://paystack.com/pay/gallivanter"
                     className="py-3 my-8 hover:bg-primary-800 transition-all duration-300 px-10 text-sm font-bold bg-orange-500 rounded-full text-white"
                   >
                     Join Tour
