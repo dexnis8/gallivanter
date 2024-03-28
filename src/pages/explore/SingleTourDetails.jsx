@@ -98,7 +98,9 @@ const SingleTourDetails = () => {
                     {data?.data?.tour?.title}
                   </h2>
                   <span className="text-xl   font-semibold text-primary-800 ">
-                    Starting at ₦{formatPrice(data?.data?.tour?.price)}
+                    Starting at{" "}
+                    {data?.data?.tour?.currency === "NGN" ? "₦" : "$"}
+                    {formatPrice(data?.data?.tour?.price)}
                   </span>
                 </div>
               </div>
@@ -144,17 +146,24 @@ const SingleTourDetails = () => {
                     </span>
                   </p>
                 </div>
-
-                <button
-                  onClick={handleJoinTour}
+                <div className="my-8">
+                  <a
+                    href="https://paystack.com/pay/u10wmz06tm"
+                    className="py-3 my-8 hover:bg-primary-800 transition-all duration-300 px-10 text-sm font-bold bg-orange-500 rounded-full text-white"
+                  >
+                    Join Tour
+                  </a>
+                </div>
+                {/* <button
+                  // onClick={handleJoinTour}
                   className="py-3 my-5 hover:bg-primary-800 transition-all duration-300 px-10 text-sm font-bold bg-orange-500 rounded-full text-white"
                 >
                   {joining ? (
                     <ClipLoader size={16} color="#fff" />
                   ) : (
-                    " Join Tour"
+                  'Join Tour'
                   )}
-                </button>
+                </button> */}
               </div>
             </div>
           </div>

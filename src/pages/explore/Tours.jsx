@@ -101,7 +101,8 @@ export function TourCard({ data }) {
           {/* Price Button */}
           <div className="flex justify-between">
             <button className="text-orange-500 text-lg font-bold  py-2 rounded-full transition-colors">
-              Starting at ₦{formatPrice(data.price)}
+              Starting at {data.currency === "NGN" ? "₦" : "$"}
+              {formatPrice(data.price)}
             </button>
             {/* <button className="py-3 my-5 hover:bg-primary-800 transition-all duration-300 px-10 text-sm font-bold bg-orange-500 rounded-full text-white">
               Join

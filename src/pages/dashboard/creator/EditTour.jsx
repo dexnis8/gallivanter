@@ -167,6 +167,7 @@ export const EditTour = () => {
       location: data?.location,
       numOfDays: data?.numOfDays,
       price: data?.price,
+      currency: data?.currency,
       maxCapacity: data?.maxCapacity,
       startDate: formatDateToYYYYMMDD(data?.startDate),
       endDate: formatDateToYYYYMMDD(data?.endDate),
@@ -455,7 +456,7 @@ export const EditTour = () => {
                   </div>
                 </div>
 
-                <div className="flex flex-col gap-y-1">
+                {/* <div className="flex flex-col gap-y-1">
                   <h4 className="text-sm mb-1 font-semibold mt-3 text-black-ercas ">
                     Price
                   </h4>
@@ -479,6 +480,59 @@ export const EditTour = () => {
                     <FormHelperText error>
                       {errors.price?.message}
                     </FormHelperText>
+                  </div>
+                </div> */}
+                <div className="flex flex-col gap-y-1">
+                  <h4 className="text-sm mb-1 font-semibold mt-3 text-black-ercas ">
+                    Price
+                  </h4>
+                  <div className="grid grid-cols-2 gap-3 justify-between items-center">
+                    <div className="flex flex-col">
+                      <h5 className="text-sm text-black-ercas ">Currency</h5>
+                      <select
+                        className={`border text-sm py-[12px] text-gray-500 ${
+                          errors.currency?.message
+                            ? "border-red-100"
+                            : "border-grey-800"
+                        } pl-2 rounded-lg outline-none ${
+                          errors.currency?.message
+                            ? "focus:border-red-500 border-1"
+                            : "focus:border-primary-800"
+                        } `}
+                        {...register("currency", {
+                          required: "Select a currency",
+                        })}
+                      >
+                        <option value="">Select</option>
+                        <option value="USD">USD</option>
+                        <option value="NGN">NGN</option>
+                      </select>
+                      <FormHelperText error>
+                        {errors.currency?.message}
+                      </FormHelperText>
+                    </div>
+                    <div className="flex flex-col">
+                      <h5 className="text-sm text-black-ercas ">Value</h5>
+                      <input
+                        type="number"
+                        placeholder="enter price in dollars"
+                        className={`border text-sm py-[12px] text-gray-500 ${
+                          errors.price?.message
+                            ? "border-red-100"
+                            : "border-grey-800"
+                        } px-4 rounded-lg outline-none ${
+                          errors.price?.message
+                            ? "focus:border-red-500 border-1"
+                            : "focus:border-primary-800"
+                        } `}
+                        {...register("price", {
+                          required: "Enter tour price!",
+                        })}
+                      />
+                      <FormHelperText error>
+                        {errors.price?.message}
+                      </FormHelperText>
+                    </div>
                   </div>
                 </div>
 
