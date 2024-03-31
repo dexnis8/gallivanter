@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { Divider } from "antd";
 // import React from "react";
 import {
@@ -9,10 +10,12 @@ import {
   FaTwitter,
   FaYoutube,
 } from "react-icons/fa";
+
 // import { useNavigate } from "react-router-dom";
 
 const Footer = () => {
   // const navigate = useNavigate();
+
   return (
     <div className=" p-[16px] md:p-[64px] items-center justify-center flex flex-col">
       <Divider className="bg-[#bdbdbd]" />

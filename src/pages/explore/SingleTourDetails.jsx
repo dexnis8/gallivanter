@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/no-unescaped-entities */
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Carousel } from "react-responsive-carousel";
@@ -15,14 +16,14 @@ import { useEffect } from "react";
 import { ClipLoader } from "react-spinners";
 import { toast } from "react-toastify";
 import { IteneryCard } from "../dashboard/creator/EditTour";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { refetchUserJoinedTours } from "../../redux/slices/authToken";
 
 const SingleTourDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
+  const isAuth = useSelector((state) => state.authToken.isAuth);
   const { data, isLoading, error } = useGetSinglePublicTourQuery({ id });
   const [
     userJoinTour,
@@ -146,24 +147,28 @@ const SingleTourDetails = () => {
                     </span>
                   </p>
                 </div>
-                <div className="my-8">
-                  <a
-                    href="https://paystack.com/pay/gallivanter"
-                    className="py-3 my-8 hover:bg-primary-800 transition-all duration-300 px-10 text-sm font-bold bg-orange-500 rounded-full text-white"
-                  >
-                    Join Tour
-                  </a>
-                </div>
-                {/* <button
-                  // onClick={handleJoinTour}
-                  className="py-3 my-5 hover:bg-primary-800 transition-all duration-300 px-10 text-sm font-bold bg-orange-500 rounded-full text-white"
-                >
-                  {joining ? (
-                    <ClipLoader size={16} color="#fff" />
-                  ) : (
-                  'Join Tour'
+                <div className="flex gap-3 flex-wrap items-center">
+                  {isAuth && (
+                    <div className="my-8">
+                      <a
+                        href="https://paystack.com/pay/gallivanter"
+                        className="py-3 my-8 hover:bg-primary-800 transition-all duration-300 px-10 text-sm font-bold bg-orange-500 rounded-full text-white"
+                      >
+                        Join Tour
+                      </a>
+                    </div>
                   )}
-                </button> */}
+                  <button
+                    onClick={handleJoinTour}
+                    className="py-3 my-5 hover:bg-primary-800 transition-all duration-300 px-10 text-sm font-bold bg-orange-500 rounded-full text-white"
+                  >
+                    {joining ? (
+                      <ClipLoader size={16} color="#fff" />
+                    ) : (
+                      "Add to Whishlist"
+                    )}
+                  </button>
+                </div>
               </div>
             </div>
           </div>

@@ -17,7 +17,7 @@ const ConfirmMail = () => {
 
   return (
     <>
-      <div className="flex py-5 overflow-y-auto gap-3 flex-col bg-purple-200  h-[100vh] w-[100vw] justify-center items-center ">
+      <div className="flex py-5 overflow-y-auto gap-3 flex-col bg-primary-200  h-[100vh] w-[100vw] justify-center items-center ">
         <div
           onClick={() => navigate("/")}
           className="mx-auto flex items-center justify-center overflow-hidden  w-[195px] h-[53px] p-8 "
@@ -37,13 +37,16 @@ const ConfirmMail = () => {
               type="submit"
               disabled={countDown > 0}
               onClick={() => navigate("/auth/forgot-password")}
-              className="mx-2 w-full py-3 rounded-lg text-purple-100 text-base bg-purple-700 hover:opacity-75 transition-opacity "
+              className="mx-2 w-full py-3 rounded-lg text-purple-100 text-base bg-orange-500 hover:opacity-75 transition-opacity "
             >
               Resend Link {countDown > 0 && "in"} {countDown > 0 && countDown}
             </button>
             <p className="text-xs mt-2 text-center">
               Back to{" "}
-              <Link to={"/auth/login"} className="text-purple-400 underline">
+              <Link
+                to={"/auth/sign-in/user"}
+                className="text-orange-500 underline"
+              >
                 Sign in
               </Link>
             </p>

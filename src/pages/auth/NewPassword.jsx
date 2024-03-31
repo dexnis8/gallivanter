@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import logo from "../../assets/logo.png";
@@ -33,14 +35,12 @@ const NewPassword = () => {
     error: verification_error,
   } = useVerifyResetLinkQuery({ resetLink });
 
-
-
   useEffect(() => {
     console.log(verification_data);
     console.log(verification_error);
     if (verification_error) {
       toast.error("Invalid password rest link!");
-      navigate("/auth/login");
+      navigate("/auth/sign-in/user");
     }
   }, [verification_data, verification_error, verifying_link]);
   const onFormSubmit = async (data) => {
@@ -73,7 +73,7 @@ const NewPassword = () => {
   return (
     <>
       {(!verification_data && verifying_link) || verification_error ? (
-       <FullPageLoader />
+        <FullPageLoader />
       ) : (
         <div>
           <AuthModal
