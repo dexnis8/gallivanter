@@ -3,7 +3,7 @@ export const sections = {
   subtitle: "Unlock Your Next Adventure",
   description: [
     {
-      title: "Unforgettable Adventures in Nigeria",
+      title: "Unforgettable Adventures in Africa",
       description:
         "Find and book trips, connect with like-minded travelers, and create unforgettable memories.",
     },

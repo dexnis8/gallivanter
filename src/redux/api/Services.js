@@ -123,9 +123,9 @@ export const Services = createApi({
     }),
     getUsersJoinedTours: builder.query({
       query: () => ({
-        url: `/users/tours/?sort=-createdAt`,
+        // url: `/users/tours/?sort=-createdAt`,
+        url: `/users/tours/wishlist/?sort=-createdAt`,
         method: "GET",
-        
       }),
     }),
     getAllItenery: builder.query({

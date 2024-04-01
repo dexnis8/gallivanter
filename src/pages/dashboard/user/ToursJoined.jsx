@@ -130,24 +130,23 @@ export const ToursJoined = () => {
           </>
         )}
 
-        {data?.tours.length === 0 ||
-          (!data && (
-            <>
-              <div className="text-center col-span-3">
-                {" "}
-                <p className="text-base text-gray-500 font-semibold">
-                  You haven't joined any tour. Explore and join tours to get
-                  started.
-                </p>
-                <button
-                  onClick={() => navigate("/explore")}
-                  className="py-3 my-5 hover:bg-primary-800 transition-all duration-300 px-10 text-sm font-bold bg-orange-500 rounded-full text-white"
-                >
-                  Explore Tours
-                </button>
-              </div>
-            </>
-          ))}
+        {data?.tours.length === 0 && (
+          <>
+            <div className="text-center col-span-3">
+              {" "}
+              <p className="text-base text-gray-500 font-semibold">
+                You haven't joined any tour. Explore and join tours to get
+                started.
+              </p>
+              <button
+                onClick={() => navigate("/explore")}
+                className="py-3 my-5 hover:bg-primary-800 transition-all duration-300 px-10 text-sm font-bold bg-orange-500 rounded-full text-white"
+              >
+                Explore Tours
+              </button>
+            </div>
+          </>
+        )}
       </div>
     </>
   );

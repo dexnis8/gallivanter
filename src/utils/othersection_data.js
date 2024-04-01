@@ -15,7 +15,7 @@ export const otherSections = [
   // },
   {
     title: "For Tourists",
-    subtitle: "Join fellow adventurers on unique trips across Nigeria",
+    subtitle: "Join fellow adventurers on unique trips across Africa",
     description: [
       {
         title: "Find and book exciting trips",
