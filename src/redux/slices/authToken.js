@@ -2,8 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   token: sessionStorage.getItem("tk") || null,
-  // isAuth: sessionStorage.getItem("tk") ? true : false,
-  isAuth: true,
+  isAuth: sessionStorage.getItem("tk") ? true : false,
   createTourStep: 1,
   refetchItinery: false,
   refetchJoinedTours: false,
