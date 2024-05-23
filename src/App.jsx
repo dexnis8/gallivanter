@@ -24,6 +24,7 @@ import { ToursJoined } from "./pages/dashboard/user/ToursJoined";
 import { UserProfile } from "./pages/dashboard/user/UserProfile";
 import { EditTour } from "./pages/dashboard/creator/EditTour";
 import CreatorSingleTour from "./pages/dashboard/creator/CreatorSingleTour";
+import Slider from "./pages/Slider";
 
 // The creator dashboard
 // 1. The create tour button
@@ -32,6 +33,13 @@ import CreatorSingleTour from "./pages/dashboard/creator/CreatorSingleTour";
 // 4. The list of users who have joined their tours.
 const App = () => {
   const navigate = useNavigate();
+
+  const images = [
+    { url: "/assets/images/img-1.jpg", description: "Image 1 Description" },
+    { url: "/assets/images/img-2.jpg", description: "Image 2 Description" },
+    { url: "/assets/images/img-3.jpg", description: "Image 3 Description" },
+  ];
+
   return (
     <>
       <div className="">
@@ -50,6 +58,7 @@ const App = () => {
       </div>
       <Routes>
         <Route path="/" element={<LandingPage />} />
+        <Route path="/slider" element={<Slider images={images} />} />
         <Route path="/auth">
           <Route index element={<Login />} />
           <Route path="sign-in" element={<Login />}>

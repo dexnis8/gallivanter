@@ -595,6 +595,7 @@ export const CreateTour = () => {
 
         {tourStep === 1 && <Step1 />}
         {tourStep === 2 && <Step2 />}
+        <Step2 />
       </div>
     </>
   );
